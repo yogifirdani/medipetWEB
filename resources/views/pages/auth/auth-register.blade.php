@@ -14,31 +14,33 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{route('register')}}" class="needs-validation" novalidate="">
-
+            <form method="POST" action="{{ route('register') }}" class="needs-validation" novalidate="">
                 @csrf
 
-                    <div class="form-group col-12">
-                        <label for="name">Name</label>
-                        <input id="name" type="text" class="form-control" name="name" autofocus>
-                    </div>
-
+                <div class="form-group col-12">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" autofocus value="{{ old('name') }}">
+                    @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
 
                 <div class="form-group col-12">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email">
-                    <div class="invalid-feedback">
-                    </div>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}">
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="password" class="d-block">Password</label>
-                        <input id="password" type="password"
-                            class="form-control @error('password')
-                        is-invalid
-                    @enderror"
-                            name="password">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
                         @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -65,7 +67,7 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
+    <!-- JS Libraries -->
     <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
     <script src="{{ asset('library/jquery.pwstrength/jquery.pwstrength.min.js') }}"></script>
 

@@ -27,8 +27,7 @@
                                 <h4>Total Customer</h4>
                             </div>
                             <div class="card-body">
-                                {{-- {{App\Models\User::jmlCust()}} --}}
-                            </div>
+                                <a href="{{ route('katalogs.index') }}" class="btn btn-primary">Ke Katalog</a>                            </div>
                         </div>
                     </div>
                 </div>

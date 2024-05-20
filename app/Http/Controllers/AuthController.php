@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -42,4 +44,34 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
+    public function register() {
+        return view('pages.auth.auth-register');
+    }
+
+    // Handle the registration logic
+    public function doRegister(Request $request) {
+        // Validate the request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        // Create a new user
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            // Assign default role, assuming '2' is the default role for customers
+            'role_id' => 2,
+        ]);
+
+        // Log the user in
+        auth()->login($user);
+
+        // Redirect to appropriate dashboard
+        return redirect()->intended('/customer');
+    }
 }
+

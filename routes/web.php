@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RedirectController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +29,10 @@ use function PHPSTORM_META\type;
 Route::group(['middleware' => 'guest'], function() {
     Route::get('/', [AuthController::class, 'login']);
     Route::post('/', [AuthController::class, 'dologin']);
+
+    //regist customer
+    Route::get('register', [AuthController::class, 'register'])->name('register');
+    Route::post('register', [AuthController::class, 'doRegister']);
 });
 
 // untuk superadmin dan pegawai
@@ -37,13 +43,25 @@ Route::group(['middleware' => ['auth', 'checkrole:1,2']], function() {
 
 // untuk admin
 Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
-    Route::get('/admin', [AdminController::class,'index']);
+    Route::get('/admin', [AdminController::class,'index'])->name('admin.index');
+
+      // Products
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/add', [ProductController::class, 'add'])->name('products.add');
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::get('/products/{id}', [ProductController::class, 'show']);
+    Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+
 
 });
 
 // untuk customer
 Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     Route::get('/customer', [CustomerController::class,'index']);
+    Route::resource('katalogs', CatalogController::class);
 
 });
 
