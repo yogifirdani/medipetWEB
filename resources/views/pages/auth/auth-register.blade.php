@@ -10,7 +10,7 @@
 @section('main')
     <div class="card card-primary">
         <div class="card-header">
-            <h3>Create Your Account</h3>
+            <h3>Bikin Akun</h3>
         </div>
 
         <div class="card-body">
@@ -18,7 +18,7 @@
                 @csrf
 
                 <div class="form-group col-12">
-                    <label for="name">Name</label>
+                    <label for="name">Nama</label>
                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" autofocus value="{{ old('name') }}">
                     @error('name')
                         <div class="invalid-feedback">
@@ -51,7 +51,7 @@
 
                 <div class="row">
                     <div class="form-group col-12">
-                        <label for="password2" class="d-block">Password Confirmation</label>
+                        <label for="password2" class="d-block">Konfirmasi Password</label>
                         <input id="password2" type="password" class="form-control" name="password_confirmation">
                     </div>
                 </div>

@@ -10,7 +10,7 @@
 @section('main')
     <div class="card card-primary ">
         <div class="card-header ">
-            <h3>Login to Your Account</h3>
+            <h3>SELAMAT DATANG!!!</h3>
         </div>
 
         <div class="card-body">
@@ -21,7 +21,7 @@
                     <input id="email" type="email" class="form-control" name="email" tabindex="1" required
                         autofocus>
                     <div class="invalid-feedback">
-                        Please fill in your email
+                        Email
                     </div>
                 </div>
 
@@ -30,20 +30,20 @@
                         <label for="password" class="control-label">Password</label>
                         <div class="float-right">
                             <a href="auth-forgot-password.html" class="text-small">
-                                Forgot Password?
+                                Lupa Password?
                             </a>
                         </div>
                     </div>
                     <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
                     <div class="invalid-feedback">
-                        please fill in your password
+                        Password
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember-me">
-                        <label class="custom-control-label" for="remember-me">Remember Me</label>
+                        <label class="custom-control-label" for="remember-me">Ingat Saya</label>
                     </div>
                 </div>
 
@@ -54,7 +54,7 @@
                 </div>
             </form>
             <div class="text-muted mt-5 text-center">
-                Don't have an account? <a href="{{ route('register') }}">Create Account</a>
+                Belum punya akun? <a href="{{ route('register') }}">Buat Akun</a>
             </div>
         </div>
     </div>

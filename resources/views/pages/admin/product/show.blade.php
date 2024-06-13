@@ -23,7 +23,7 @@
                         <div class="article-details">
                             <p>{{ $product['deskripsi'] }}</p>
                             <div class="article-cta">
-                                <a href="#" class="btn btn-primary">IDR {{ $product['price'] }}</a>
+                                <a href="#" class="btn btn-primary">IDR {{ $product['harga'] }}</a>
                             </div>
                         </div>
                     </article>

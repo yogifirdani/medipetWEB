@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-cust')
 
 @section('title', 'General Dashboard')
 
@@ -24,10 +24,10 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Total Customer</h4>
+                                <h4>My Transaction</h4>
                             </div>
                             <div class="card-body">
-                                <a href="{{ route('katalogs.index') }}" class="btn btn-primary">Ke Katalog</a>                            </div>
+                           </div>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Grooming</h4>
+                                <h4>Pet Service</h4>
                             </div>
                             <div class="card-body">
                                  {{-- {{App\Models\Product::jmlStok('Grooming') }} --}}
@@ -53,7 +53,7 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Vaksin</h4>
+                                <h4>Products</h4>
                             </div>
                             <div class="card-body">
                                  {{-- {{App\Models\Product::jmlStok('Vaksin') }} --}}
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                {{-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-success">
                             <i class="fas fa-circle"></i>
@@ -72,12 +72,12 @@
                             </div>
                             <div class="card-body">
                                 {{-- {{App\Models\Product::jmlProduk()}} --}}
-                            </div>
+                           {{-- </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
+            </div> --}}
+            {{-- <div class="row">
                 <div class="col-lg-8 col-md-12 col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
@@ -122,7 +122,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-lg-4 col-md-12 col-12 col-sm-12">
                     <div class="card">
                         <div class="card-header">
@@ -137,7 +137,7 @@
                                         alt="avatar">
                                     <div class="media-body">
                                         <div class="text-primary float-right">Now</div>
-                                        <div class="media-title">Farhan A Mujib</div>
+                                        <div class="media-title">Packet Received</div>
                                         <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla.
                                             Nulla vel metus scelerisque ante sollicitudin.</span>
                                     </div>
@@ -149,7 +149,7 @@
                                         alt="avatar">
                                     <div class="media-body">
                                         <div class="float-right">12m</div>
-                                        <div class="media-title">Ujang Maman</div>
+                                        <div class="media-title">Packet delivered</div>
                                         <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla.
                                             Nulla vel metus scelerisque ante sollicitudin.</span>
                                     </div>
@@ -161,7 +161,7 @@
                                         alt="avatar">
                                     <div class="media-body">
                                         <div class="float-right">17m</div>
-                                        <div class="media-title">Rizal Fakhri</div>
+                                        <div class="media-title">Payment Success</div>
                                         <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla.
                                             Nulla vel metus scelerisque ante sollicitudin.</span>
                                     </div>
@@ -173,7 +173,7 @@
                                         alt="avatar">
                                     <div class="media-body">
                                         <div class="float-right">21m</div>
-                                        <div class="media-title">Alfa Zulkarnain</div>
+                                        <div class="media-title">You ordered kitten snack</div>
                                         <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla.
                                             Nulla vel metus scelerisque ante sollicitudin.</span>
                                     </div>

@@ -8,10 +8,17 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $products = Product::all();
+            $query = $request->input('q');
+            if ($query) {
+                $products = Product::where('nama', 'like', '%' . $query . '%')
+                    ->orWhere('kategori', 'like', '%' . $query . '%')
+                    ->get();
+            } else {
+                $products = Product::all();
+            }
 
             return view('pages.admin.product.index', compact('products'));
         } catch (\Exception $e) {
@@ -28,11 +35,15 @@ class ProductController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                "name" => "required",
-                "category" => "required|in:grooming,vaksin,item",
+                "nama" => "required|string",
+                "jenis_hewan" => "required|string",
+                "kategori" => "required|string",
+                "merek" => "required",
+                "berat" => "required|string",
                 "stok" => "required|numeric",
-                "price" => "required|numeric",
+                "harga" => "required|numeric",
                 "deskripsi" => "required",
+                "kadaluarsa" => "required",
                 'image' => 'required|mimes:png,jpg,jpeg|max:2048',
             ]);
 
@@ -45,11 +56,15 @@ class ProductController extends Controller
             $file->move(public_path('/product'), $fileName);
 
             Product::create([
-                "name" => $request->name,
-                "category" => $request->category,
+                "nama" => $request->nama,
+                "jenis_hewan" => $request->jenis_hewan,
+                "kategori" => $request->kategori,
+                "merek" => $request->merek,
+                "berat" => $request->berat,
                 "stok" => $request->stok,
-                "price" => $request->price,
+                "harga" => $request->harga,
                 "deskripsi" => $request->deskripsi,
+                "kadaluarsa" => $request->kadaluarsa,
                 "image" => $fileName,
             ]);
 
@@ -64,7 +79,6 @@ class ProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-
             return view('pages.admin.product.show', compact('product'));
         } catch (\Exception $e) {
             return back()->withError($e->getMessage())->withInput();
@@ -86,11 +100,12 @@ class ProductController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                "name" => "required",
-                // "category" => "required|in:grooming,vaksin,item",
+                "nama" => "required",
+                // "kategori" => "required|in:grooming,vaksin,item",
                 "stok" => "required",
-                "price" => "required",
+                "harga" => "required",
                 "deskripsi" => "required",
+                "kadaluarsa" => "required",
                 'image' => 'mimes:png,jpg,jpeg|max:2048',
             ]);
 
@@ -100,7 +115,7 @@ class ProductController extends Controller
 
             $product = Product::findOrFail($id);
 
-            $data = $request->only(['name', 'category', 'stok', 'price', 'deskripsi']);
+            $data = $request->only(['nama', 'stok', 'harga', 'deskripsi', 'kadaluarsa']);
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $fileName = time() . '_' . $file->getClientOriginalName();
@@ -135,4 +150,6 @@ class ProductController extends Controller
             return back()->withError($e->getMessage())->withInput();
         }
     }
+
+
 }

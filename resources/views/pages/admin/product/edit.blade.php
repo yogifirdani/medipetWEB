@@ -37,8 +37,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Nama</label>
-                                    <input type="text" class="form-control" name="name"
-                                        value="{{ $product['name'] }}">
+                                    <input type="text" class="form-control" name="nama"
+                                        value="{{ $product['nama'] }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Stok</label>
@@ -49,8 +49,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Harga</label>
-                                    <input type="text" class="form-control" name="price"
-                                        value="{{ $product['price'] }}">
+                                    <input type="text" class="form-control" name="harga"
+                                        value="{{ $product['harga'] }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi</label>
@@ -58,7 +58,11 @@
                                         value="{{ $product['deskripsi'] }}">
                                 </div>
 
-
+                                <div class="form-group">
+                                    <label>Tanggal Kadaluarsa</label>
+                                    <input type="date" class="form-control datepicker" id="kadaluarsa"
+                                        name="kadaluarsa" value="{{ $product['kadaluarsa'] }}">
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('product', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('category', ['grooming', 'vaksin', 'item'])->require();
+            $table->string('nama');
+            $table->string('jenis_hewan');
+            $table->string('kategori');
+            $table->string('merek');
+            $table->string('berat');
             $table->integer('stok');
-            $table->integer('price');
+            $table->integer('harga');
             $table->string('deskripsi');
+            $table->date('kadaluarsa');
             $table->string('image');
             $table->timestamps();
         });

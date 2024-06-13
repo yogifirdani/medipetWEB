@@ -12,12 +12,16 @@ class Product extends Model
     protected $table = "product";
     protected $primaryKey = 'id';
     protected $fillable = [
-        'name',
-        'category',
+        'nama',
+        'jenis_hewan',
+        'kategori',
+        'merek',
+        'berat',
         'stok',
-        'price',
+        'harga',
         'deskripsi',
         'image',
+        'kadaluarsa',
     ];
 
     // public static function jmlStok($category)

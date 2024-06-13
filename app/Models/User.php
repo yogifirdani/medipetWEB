@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
     ];
 
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -46,4 +48,14 @@ class User extends Authenticatable
     public function role() {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    // public function posts()
+    // {
+    //     return $this->hasMany(Post::class);
+    // }
+
+    // public function comments()
+    // {
+    //     return $this->hasMany(Comment::class);
+    // }
 }

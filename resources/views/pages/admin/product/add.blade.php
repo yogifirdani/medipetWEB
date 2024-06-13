@@ -15,7 +15,7 @@
 
             <div class="section-body mt-5">
                 <div class="card ">
-                    <form action={{ url('/products')}} method="POST" enctype="multipart/form-data">
+                    <form action={{ url('/products') }} method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="card-body">
@@ -26,16 +26,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nama Produk</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Nama">
+                                    <input type="text" class="form-control" name="nama" placeholder="Nama">
                                 </div>
                                 <div class="form-group">
-                                    <label>Category Product</label>
-                                    <select class="form-select" name="category" aria-label="Default select example">
-                                        <option selected disabled>Open this select menu</option>
-                                        <option value="grooming">Grooming</option>
-                                        <option value="vaksin">Vaksin</option>
-                                        <option value="item">Item</option>
-                                    </select>
+                                    <label>Jenis Hewan</label>
+                                    <input type="text" class="form-control" name="jenis_hewan" placeholder="Jenis Hewan">
+                                </div>
+                                <div class="form-group">
+                                    <label>Kategori Product</label>
+                                    <input type="text" class="form-control" name="kategori" placeholder="Kategori">
+                                </div>
+                                <div class="form-group">
+                                    <label>Merek</label>
+                                    <input type="text" class="form-control" name="merek" placeholder="Merek">
+                                </div>
+                                <div class="form-group">
+                                    <label>Berat</label>
+                                    <input type="text" class="form-control" name="berat" placeholder="Berat">
                                 </div>
                                 <div class="form-group">
                                     <label>Stok</label>
@@ -43,11 +50,17 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Harga</label>
-                                    <input type="text" class="form-control" name="price" placeholder="Harga ">
+                                    <input type="text" class="form-control" name="harga" placeholder="Harga ">
                                 </div>
                                 <div class="form-group">
                                     <label>Deskripsi</label>
                                     <input type="text" class="form-control" name="deskripsi" placeholder="Deskripsi ">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tanggal Kadaluarsa</label>
+                                    <div class="input-group">
+                                        <input type="date" class="form-control datepicker" name="kadaluarsa" />
+                                    </div>
                                 </div>
                             </div>
                         </div>

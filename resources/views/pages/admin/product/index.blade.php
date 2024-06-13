@@ -2,6 +2,10 @@
 
 @section('title', 'Manage Item')
 
+@push('style')
+    {{-- CSS Libraries --}}
+@endpush
+
 @section('main')
     <div class="main-content">
         <section class="section">
@@ -11,6 +15,7 @@
 
             <div class="section-body">
                 <div class="col-12 col-md-12 col-lg-12">
+
                     @if(session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
@@ -21,7 +26,13 @@
                         <h5>Menambahkan Produk</h5></a>
                     <div class="card mt-4">
                         <div class="card-header">
-                            <h4></h4>
+                            <div class="search-element">
+                                <form action="{{ route('products.index') }}" class="form-inline" method="GET">
+                                    <input class="form-control" type="search" name="q" placeholder="Search" aria-label="Search" data-width="350" value="{{ request('q') }}">
+                                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                                </form>
+                                <div class="search-backdrop"></div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -30,21 +41,29 @@
                                         <th>Id</th>
                                         <th>Gambar</th>
                                         <th>Nama</th>
+                                        <th>Jenis Hewan</th>
                                         <th>Kategori</th>
+                                        <th>Merek</th>
+                                        <th>Berat</th>
                                         <th>Stok</th>
                                         <th>Harga</th>
                                         <th>Deskripsi</th>
+                                        <th>Kadaluarsa</th>
                                         <th>Aksi</th>
                                     </tr>
                                     @foreach ($products as $product)
                                         <tr>
                                             <td>{{ $product->id }}</td>
                                             <td><img src="{{ url('/product/' . $product->image) }}" alt="" width="100"></td>
-                                            <td>{{ $product->name }}</td>
-                                            <td>{{ $product->category }}</td>
+                                            <td>{{ $product->nama }}</td>
+                                            <td>{{ $product->jenis_hewan }}</td>
+                                            <td>{{ $product->kategori }}</td>
+                                            <td>{{ $product->merek }}</td>
+                                            <td>{{ $product->berat }}</td>
                                             <td>{{ $product->stok }}</td>
-                                            <td>{{ $product->price }}</td>
+                                            <td>{{ $product->harga }}</td>
                                             <td>{{ $product->deskripsi }}</td>
+                                            <td>{{ $product->kadaluarsa }}</td>
                                             <td>
                                                 <form action="{{ url('/products/' . $product->id) }}" method="POST">
                                                     <a href="{{ url('/products/' . $product->id . '/edit') }}"

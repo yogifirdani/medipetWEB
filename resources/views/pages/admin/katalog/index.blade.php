@@ -10,21 +10,21 @@
         </div>
         <div class="section-body">
             <div class="row">
-                @foreach ($product as $products)
+                @foreach ($products as $product)
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <article class="article">
                         <div class="article-header">
                             <div class="article-image"
-                                style="background-image: url('{{ asset($products->image) }}')">
+                                style="background-image: url('{{ asset($product->image) }}')">
                             </div>
                         </div>
                         <div class="article-details">
                             <div class="article-title">
-                                <h2>{{ $products->name }}</h2>
+                                <h2>{{ $product->name }}</h2>
                             </div>
-                            {{-- <p>{{ $products->deskripsi }}</p> --}}
+                            <p>{{ $product->deskripsi }}</p>
                             <div class="article-cta">
-                                <a href="#" class="btn btn-primary">IDR {{ $products->price }}</a>
+                                <a href="#" class="btn btn-primary">IDR {{ $product->price }}</a>
                             </div>
                         </div>
                     </article>
