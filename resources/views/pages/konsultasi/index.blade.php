@@ -26,6 +26,15 @@
                     </p>
                 </div>
             @endif
+
+                <div class="mb-3">
+                    <form action="/konsultasi" method="GET" class="d-flex" role="search">
+                        @csrf
+                        <input class="form-control me-2" type="search" name="search" placeholder="Search Konsultasi" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+
             <form action="/konsultasi" method="POST" class="card mb-3 p-3">
                 @csrf
                 <div class="mb-2">
@@ -35,6 +44,7 @@
                 <button type="submit" class="btn btn-sm btn-success">Tambah Konsultasi</button>
             </form>
 
+                @if(count($konsultasi) > 0)
             @foreach($konsultasi as $konsul)
 
             <div class="card mb-3">
@@ -69,6 +79,9 @@
             </div>
 
             @endforeach
+                @else
+                    <h5 class="text-center">Konsultasi is empty</h5>
+                @endif
         </div>
     </div>
 @endsection
