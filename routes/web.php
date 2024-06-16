@@ -61,6 +61,12 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
     Route::get('/products/search',[ProductController::class, 'search']);
 
+    //    Konsultasi
+    Route::get('/konsultasi', [\App\Http\Controllers\KonsultasiController::class, 'index']);
+    Route::post('/konsultasi', [\App\Http\Controllers\KonsultasiController::class, 'store']);
+    Route::post('/konsultasi/{id}', [\App\Http\Controllers\KonsultasiController::class, 'storeComment']);
+
+
     // Route::get('/katalogs', [CatalogController::class, 'index']);
 
 
@@ -90,6 +96,10 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     // Route::put('/comments/{id}', [CommentController::class, 'update']);
     // Route::delete('/comments/{id}', [CommentController::class, 'destroy']);
 
+//    Konsultasi
+    Route::get('/konsultasi', [\App\Http\Controllers\KonsultasiController::class, 'index']);
+    Route::post('/konsultasi', [\App\Http\Controllers\KonsultasiController::class, 'store']);
+    Route::post('/konsultasi/{id}', [\App\Http\Controllers\KonsultasiController::class, 'storeComment']);
 });
 
 
