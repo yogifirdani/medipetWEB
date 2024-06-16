@@ -38,7 +38,7 @@
 
 
             <div class="hide-sidebar-mini mt-4 mb-4 p-3">
-                <a href="/katalogs" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                <a href="/catalogs" class="btn btn-primary btn-lg btn-block btn-icon-split">
                     <i class="fas fa-rocket"></i> Katalog
                 </a>
             </div>

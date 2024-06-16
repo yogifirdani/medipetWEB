@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     // Catalog
     Route::get('/catalogs', [CatalogController::class, 'index'])->name('catalogs.index');
     Route::get('/catalogs/{id}', [CatalogController::class, 'show'])->name('catalogs.show');
+    Route::post('/catalogs/{id}/addtocart', [CatalogController::class, 'addToCart'])->name('catalogs.addToCart');
     // Comments
     // Route::get('/comments', [CommentController::class, 'index']);
     // Route::get('/comments/{id}', [CommentController::class, 'show']);
