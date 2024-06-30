@@ -9,13 +9,13 @@
         <ul class="sidebar-menu">
             <li class="menu-header">Beranda</li>
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Mengelola</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Data Diri</span></a>
                 <ul class="dropdown-menu">
                     <li class=''>
-                        <a class="nav-link" href="/orders">Pesanan Saya</a>
+                        <a class="nav-link" href="#">Riwayat Pesanan</a>
                     </li>
                     <li class=" ">
-                        <a class="nav-link" href="/products">Profile</a>
+                        <a class="nav-link" href="/profile">Profile</a>
                     </li>
 
                 </ul>
@@ -26,14 +26,14 @@
                     <span>Katalog</span></a>
             </li> --}}
 
-            <li class="{{ Request::is('posts') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('posts') }}"><i class="far fa-square"></i>
+            <li class="{{ Request::is('konsultasi') ? 'active' : '' }}">
+                <a class="nav-link" href="/konsultasi"><i class="fa-regular fa-comment-dots"></i>
                     <span>Konsultasi</span></a>
             </li>
 
-            <li class="{{ Request::is('posts') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('posts') }}"><i class="far fa-square"></i>
-                    <span>Schedule</span></a>
+            <li class="{{ Request::is('bookings.create') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ url('bookings/create') }}"><i class="far fa-square"></i>
+                    <span>Layanan</span></a>
             </li>
 
 

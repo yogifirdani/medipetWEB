@@ -28,38 +28,48 @@
                                     <label>Nama Produk</label>
                                     <input type="text" class="form-control" name="nama" placeholder="Nama">
                                 </div>
-                                <div class="form-group">
-                                    <label>Jenis Hewan</label>
-                                    <input type="text" class="form-control" name="jenis_hewan" placeholder="Jenis Hewan">
-                                </div>
-                                <div class="form-group">
-                                    <label>Kategori Product</label>
-                                    <input type="text" class="form-control" name="kategori" placeholder="Kategori">
-                                </div>
-                                <div class="form-group">
-                                    <label>Merek</label>
-                                    <input type="text" class="form-control" name="merek" placeholder="Merek">
-                                </div>
-                                <div class="form-group">
-                                    <label>Berat</label>
-                                    <input type="text" class="form-control" name="berat" placeholder="Berat">
-                                </div>
-                                <div class="form-group">
-                                    <label>Stok</label>
-                                    <input type="text" class="form-control" name="stok" placeholder="Stok">
-                                </div>
-                                <div class="form-group">
-                                    <label>Harga</label>
-                                    <input type="text" class="form-control" name="harga" placeholder="Harga ">
-                                </div>
-                                <div class="form-group">
-                                    <label>Deskripsi</label>
-                                    <input type="text" class="form-control" name="deskripsi" placeholder="Deskripsi ">
-                                </div>
-                                <div class="form-group">
-                                    <label>Tanggal Kadaluarsa</label>
-                                    <div class="input-group">
-                                        <input type="date" class="form-control datepicker" name="kadaluarsa" />
+                               
+                                <div class="row">
+                                    <!-- Kolom Kiri -->
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="jenis_hewan">Jenis Hewan</label>
+                                            <input type="text" class="form-control" id="jenis_hewan" name="jenis_hewan" placeholder="Jenis Hewan">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="merek">Merek</label>
+                                            <input type="text" class="form-control" id="merek" name="merek" placeholder="Merek">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="stok">Stok</label>
+                                            <input type="text" class="form-control" id="stok" name="stok" placeholder="Stok">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="deskripsi">Deskripsi</label>
+                                            <input type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="Deskripsi">
+                                        </div>
+                                    </div>
+
+                                    <!-- Kolom Kanan -->
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label for="kategori">Kategori Produk</label>
+                                            <input type="text" class="form-control" id="kategori" name="kategori" placeholder="Kategori">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="berat">Berat</label>
+                                            <input type="text" class="form-control" id="berat" name="berat" placeholder="Berat">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="harga">Harga</label>
+                                            <input type="text" class="form-control" id="harga" name="harga" placeholder="Harga">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="kadaluarsa">Tanggal Kadaluarsa</label>
+                                            <div class="input-group">
+                                                <input type="date" class="form-control" id="kadaluarsa" name="kadaluarsa">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

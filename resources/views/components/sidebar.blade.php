@@ -12,33 +12,32 @@
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Mengelola</span></a>
                 <ul class="dropdown-menu">
                     <li class=''>
-                        <a class="nav-link" href="/orders">Pesanan</a>
+                        <a class="nav-link" href="/transaksi">Pesanan</a>
                     </li>
                     <li class=" ">
                         <a class="nav-link" href="/products">Produk</a>
                     </li>
-
+                    <li class=" ">
+                        <a class="nav-link" href="/categories">Layanan</a>
+                    </li>
                 </ul>
             </li>
 
-            {{-- <li class="{{ Request::is('blank-page') ? 'active' : '' }}">
-                <a class="nav-link" href="/Katalog"><i class="far fa-square"></i>
-                    <span>Katalog</span></a>
-            </li> --}}
-
-            <li class="{{ Request::is('posts') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('posts') }}"><i class="far fa-square"></i>
+            <li class="{{ Request::is('konsultasi') ? 'active' : '' }}">
+                <a class="nav-link" href="/konsultasiadmin"><i class="fa-regular fa-comment-dots"></i>
                     <span>Konsultasi</span></a>
             </li>
 
-            <li class="{{ Request::is('posts') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('posts') }}"><i class="far fa-square"></i>
-                    <span>Schedule</span></a>
+            <li class="{{ Request::is('layanan') ? 'active' : '' }}">
+                <a class="nav-link" href="/orders"><i class="fa-regular fa-calendar"></i>
+                    <span>Jadwal Layanan</span></a>
             </li>
 
 
+
+
             <div class="hide-sidebar-mini mt-4 mb-4 p-3">
-                <a href="/katalogs" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                <a href="/catalogs" class="btn btn-primary btn-lg btn-block btn-icon-split">
                     <i class="fas fa-rocket"></i> Katalog
                 </a>
             </div>

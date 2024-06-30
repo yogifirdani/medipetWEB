@@ -8,6 +8,15 @@
           href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
     <link rel="stylesheet"
           href="{{ asset('library/summernote/dist/summernote-bs4.min.css') }}">
+          <style>
+            .comments-section {
+                display: none;
+            }
+
+            .toggle-comments{
+                cursor: pointer;
+            }
+        </style>
 @endpush
 
 @section('main')
@@ -55,14 +64,16 @@
                 <div class="p-3">
                     <div style="display: flex; justify-content: space-between;">
                         <p class="font-weight-bold">Komentar</p>
-                <p style="text-align: right;">Comments ({{count($konsul->comments)}})</p>
+                <p class="toggle-comments" data-target="#comments-{{ $konsul->id }}">Comments ({{count($konsul->comments)}})</p>
                     </div>
+                    <div id="comments-{{ $konsul->id }}" class="comments-section">
                     @foreach($konsul->comments as $comment)
 
                         <p>{{$comment->content}}</p>
                         <small class="text-muted">{{$konsul->user->name}} - {{$konsul->created_at}}</small>
 
                     @endforeach
+                    </div>
                 </div>
 
                 <form action="/konsultasi/{{$konsul->id}}" method="POST" class="pr-3 pl-3 pb-3">
@@ -97,4 +108,19 @@
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/index-0.js') }}"></script>
+    <script src="{{ asset('js/page/index-0.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.toggle-comments').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const target = document.querySelector(button.getAttribute('data-target'));
+                    if (target.style.display === 'none' || target.style.display === '') {
+                        target.style.display = 'block';
+                    } else {
+                        target.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 @endpush

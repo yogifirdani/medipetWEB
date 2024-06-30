@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'address',
+        'phone',
     ];
 
 
@@ -49,13 +51,9 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    // public function posts()
-    // {
-    //     return $this->hasMany(Post::class);
-    // }
+    public static function jmlCust()
+    {
+        return self::where('role_id', 2)->count();
+    }
 
-    // public function comments()
-    // {
-    //     return $this->hasMany(Comment::class);
-    // }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-cust')
 
 @section('title', 'List Produk')
 
@@ -31,13 +31,13 @@
                             <div class="article-details">
                                 <div class="article-title">
                                     <h2><a href="{{ route('catalogs.show', $product->id) }}">{{ $product->nama }}</a></h2>
-                                    <p><h4>Rp.{{ $product->harga }}</h4></p>
+                                    <p><h4>Rp. {{ $product->harga }}</h4></p>
                                 </div>
                                 {{-- <p>{{ Str::limit($product->deskripsi, 100) }}</p> --}}
                                 <div class="article-cta">
                                     <a href="{{ route('catalogs.show', $product->id) }}" class="btn btn-primary">Beli Sekarang</a>
                                     {{-- <a class="btn btn-outline-secondary">IDR {{ number_format($product->harga, 0, ',', '.') }}</a> --}}
-                                    <a href="{{ route('catalogs.addToCart', $product->id) }}" class="btn btn-primary">
+                                    <a href="{{ route('cart.addtocart', $product->id) }}" class="btn btn-primary">
                                         <i class="fas fa-shopping-cart"></i>
                                     </a>
                                 </div>

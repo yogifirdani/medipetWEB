@@ -26,23 +26,16 @@
                         <div class="media-body">
                             <h5 class="mt-0">Rp.{{ number_format($product->harga, 2) }}</h5>
 
-                            <p>{{ $product->deskripsi }}</p>
+                            <p class="mt-5 px-4">{{ $product->deskripsi }}</p>
 
-                            <div class="mb-3">
-
+                            <div class="mb-3 px-4">
                                 <p class="text-sm text-gray-500 mb-1">Stok: {{ $product->stok }}</p>
                                 <p class="text-sm text-gray-500 mb-1">Kadaluarsa: {{ $product->kadaluarsa }}</p>
                             </div>
 
-
-
-                            <form action="{{ route('catalogs.addToCart', $product->id) }}" method="POST" class="mt-8">
+                            <form action="{{ route('catalogs.addToCart', $product->id) }}" method="POST" class="mt-9 px-4">
                                 @csrf
-                                <div class="form-group">
-                                    <label for="quantity" class="text-sm font-medium">Jumlah</label>
-                                    <input type="number" name="quantity" id="quantity" min="1" max="{{ $product->stok }}" value="1" class="form-control d-inline-block w-25">
-                                </div>
-                                <button type="submit" class="btn btn-primary mt-2">Tambah ke Keranjang</button>
+                                <button type="submit" class="btn btn-primary mt-5">Tambah ke Keranjang</button>
                             </form>
                         </div>
                     </div>

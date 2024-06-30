@@ -2,12 +2,20 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ManageOrderController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\ViewOrderController;
 use Illuminate\Support\Facades\Route;
 
 use function PHPSTORM_META\type;
@@ -62,44 +70,78 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
     Route::get('/products/search',[ProductController::class, 'search']);
 
     //    Konsultasi
-    Route::get('/konsultasi', [\App\Http\Controllers\KonsultasiController::class, 'index']);
-    Route::post('/konsultasi', [\App\Http\Controllers\KonsultasiController::class, 'store']);
-    Route::post('/konsultasi/{id}', [\App\Http\Controllers\KonsultasiController::class, 'storeComment']);
+    Route::get('/konsultasiadmin', [\App\Http\Controllers\KonsultasiController::class, 'indexadmin']);
+    Route::post('/konsultasiadmin', [\App\Http\Controllers\KonsultasiController::class, 'storeadmin']);
+    Route::post('/konsultasiadmin/{id}', [\App\Http\Controllers\KonsultasiController::class, 'storeCommentadmin']);
 
 
-    // Route::get('/katalogs', [CatalogController::class, 'index']);
 
+    Route::get('/catalogs', [CatalogController::class, 'index'])->name('catalogs.index');
 
-    // Posts
+    // manage order
+    Route::get('/transaksi', [ManageOrderController::class, 'index']);
+    Route::get('/transaksi/{id}', [ManageOrderController::class, 'show']);
+    Route::get('/transaksi/add', [ManageOrderController::class, 'add']);
+    Route::post('/transaksi', [ManageOrderController::class, 'store']);
+    Route::get('/transaksi/{id}/edit', [ManageOrderController::class, 'edit']);
+    Route::post('/transaksi/{id}', [ManageOrderController::class, 'update']);
+    Route::delete('/transaksi/{id}', [ManageOrderController::class,'destroy']);
 
+    //order
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+    Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+    Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
+    Route::post('/orders/{id}/process', [OrderController::class, 'processOrder'])->name('orders.process');
+    Route::post('/orders/{id}/complete', [OrderController::class, 'completeOrder'])->name('orders.complete');
 
-    // Route::get('/posts', [PostController::class, 'index']);
-    // Route::get('/posts/{id}', [PostController::class, 'show']);
-    // Route::post('/posts', [PostController::class, 'store']);
-    // Route::post('/posts/{id}', [PostController::class, 'update']);
-    // Route::delete('/posts/{id}', [PostController::class, 'destroy']);
-
+    //kategori
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 });
 
 // untuk customer
 Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
-    Route::get('/customer', [CustomerController::class,'index']);
+    Route::get('/customer', [DashboardController::class,'index'])->name('dashboard.index');
+
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
     // Catalog
     Route::get('/catalogs', [CatalogController::class, 'index'])->name('catalogs.index');
     Route::get('/catalogs/{id}', [CatalogController::class, 'show'])->name('catalogs.show');
     Route::post('/catalogs/{id}/addtocart', [CatalogController::class, 'addToCart'])->name('catalogs.addToCart');
-    // Comments
-    // Route::get('/comments', [CommentController::class, 'index']);
-    // Route::get('/comments/{id}', [CommentController::class, 'show']);
-    // Route::post('/comments', [CommentController::class, 'store']);
-    // Route::put('/comments/{id}', [CommentController::class, 'update']);
-    // Route::delete('/comments/{id}', [CommentController::class, 'destroy']);
 
-//    Konsultasi
+
+    // Konsultasi
     Route::get('/konsultasi', [\App\Http\Controllers\KonsultasiController::class, 'index']);
     Route::post('/konsultasi', [\App\Http\Controllers\KonsultasiController::class, 'store']);
     Route::post('/konsultasi/{id}', [\App\Http\Controllers\KonsultasiController::class, 'storeComment']);
+
+    // Booking
+    Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
+    Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
+
+    // keranjang + co
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/add/{id}', [CartController::class, 'addtocart'])->name('cart.addtocart');
+    Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+    Route::post('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{id}', [CartController::class, 'removeitem'])->name('cart.remove');
+    // Route::post('/beli/{id}', [CartController::class, 'cart'])->name('checkout');
+    Route::post('/pemesanan', [CartController::class, 'checkout'])->name('pemesanan');
+    Route::get('/pesanan/success', [CartController::class, 'success'])->name('success');
+
+    // view order
+    Route::get('/view', [ViewOrderController::class, 'show'])->name('view');
 });
 
 
@@ -148,22 +190,6 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
 
 
 
-
-// Route::get('login', function () {
-//     return view('pages.auth.auth-login', ['type_menu' => 'auth']);
-// });
-
-// Route::get('register', function () {
-//     return view('pages.auth.auth-register', ['type_menu' => 'auth']);
-// });
-
-// Route::get('reset-password', function () {
-//     return view('pages.auth.auth-reset-password', ['type_menu' => 'auth']);
-// });
-
-// Route::get('forgot-password', function () {
-//     return view('pages.auth.auth-forgot-password', ['type_menu' => 'auth']);
-// });
 
 
 

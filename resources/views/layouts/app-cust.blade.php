@@ -38,7 +38,7 @@
     <div id="app">
         <div class="main-wrapper">
             <!-- Header -->
-            @include('components.header')
+            @include('components.header-cust')
 
             <!-- Sidebar -->
             @include('components.sidebar-cust')
@@ -47,7 +47,7 @@
             @yield('main')
 
             <!-- Footer -->
-            @include('components.footer')
+            {{-- @include('components.footer') --}}
         </div>
     </div>
 

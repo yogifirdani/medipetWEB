@@ -24,6 +24,11 @@ class Product extends Model
         'kadaluarsa',
     ];
 
+    public static function jmlProduk()
+    {
+        return self::count();
+    }
+
     // public static function jmlStok($category)
     // {
     //     return self::where('category', $category)->sum('stok');
