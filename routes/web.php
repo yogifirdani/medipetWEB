@@ -9,12 +9,15 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\HistoryPesanan;
 use App\Http\Controllers\ManageOrderController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\RestockController;
 use App\Http\Controllers\ViewOrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +39,7 @@ use function PHPSTORM_META\type;
 // });
 
 //  jika user belum login
-Route::group(['middleware' => 'guest'], function() {
+Route::group(['middleware' => 'guest'], function () {
     Route::get('/', [AuthController::class, 'login']);
     Route::post('/', [AuthController::class, 'dologin']);
 
@@ -46,28 +49,25 @@ Route::group(['middleware' => 'guest'], function() {
 });
 
 // untuk superadmin dan customer
-Route::group(['middleware' => ['auth', 'checkrole:1,2']], function() {
+Route::group(['middleware' => ['auth', 'checkrole:1,2']], function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/redirect', [RedirectController::class, 'cek']);
-
-
-
 });
 
 // untuk admin
-Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
-    Route::get('/admin', [AdminController::class,'index'])->name('admin.index');
+Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
-      // Products
-      Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-      Route::get('/products/search', [ProductController::class, 'index'])->name('products.search');
+    // Products
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/search', [ProductController::class, 'index'])->name('products.search');
     Route::get('/products/add', [ProductController::class, 'add'])->name('products.add');
     Route::post('/products', [ProductController::class, 'store']);
     Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
     Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
-    Route::get('/products/search',[ProductController::class, 'search']);
+    Route::get('/products/search', [ProductController::class, 'search']);
 
     //    Konsultasi
     Route::get('/konsultasiadmin', [\App\Http\Controllers\KonsultasiController::class, 'indexadmin']);
@@ -79,13 +79,14 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
     Route::get('/catalogs', [CatalogController::class, 'index'])->name('catalogs.index');
 
     // manage order
-    Route::get('/transaksi', [ManageOrderController::class, 'index']);
-    Route::get('/transaksi/{id}', [ManageOrderController::class, 'show']);
-    Route::get('/transaksi/add', [ManageOrderController::class, 'add']);
-    Route::post('/transaksi', [ManageOrderController::class, 'store']);
-    Route::get('/transaksi/{id}/edit', [ManageOrderController::class, 'edit']);
-    Route::post('/transaksi/{id}', [ManageOrderController::class, 'update']);
-    Route::delete('/transaksi/{id}', [ManageOrderController::class,'destroy']);
+    Route::get('/transaksi/create', [ManageOrderController::class, 'create'])->name('transaksi.create');
+    Route::get('/transaksi', [ManageOrderController::class, 'index'])->name('transaksi.index');
+    Route::get('/transaksi/{id}', [ManageOrderController::class, 'show'])->name('transaksi.show');
+    Route::post('/transaksi', [ManageOrderController::class, 'store'])->name('transaksi.store');
+    Route::post('/transaksi/{id}', [ManageOrderController::class, 'update'])->name('transaksi.update');
+    Route::delete('/transaksi/{id}', [ManageOrderController::class,'destroy'])->name('transaksi.destrpy');
+
+    Route::get('/get-product-price/{id}', [ManageOrderController::class, 'getProductPrice']);
 
     //order
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
@@ -103,11 +104,22 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
     Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    //restock
+    // Route::get('/restocks', [RestockController::class, 'index'])->name('restocks.index');
+    // Route::get('/restocks/create', [RestockController::class, 'create'])->name('restocks.create');
+    // Route::get('/restocks/edit/{$id_restock}', [RestockController::class, 'edit'])->name('restocks.edit');
+    // Route::put('/restocks/{id_restock}', [RestockController::class, 'update'])->name('restocks.update');
+    // Route::post('/restocks', [RestockController::class, 'store'])->name('restocks.store');
+    // Route::get('/restocks/{id}', [RestockController::class, 'show'])->name('restocks.show');
+    Route::resource('restocks', RestockController::class);
+    // Route::delete('/restocks/{id_restock}', [RestockController::class, 'destroy'])->name('restocks.destroy');
+
 });
 
 // untuk customer
-Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
-    Route::get('/customer', [DashboardController::class,'index'])->name('dashboard.index');
+Route::group(['middleware' => ['auth', 'checkrole:2']], function () {
+    Route::get('/customer', [DashboardController::class, 'index'])->name('dashboard.index');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -138,59 +150,11 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     Route::delete('/cart/{id}', [CartController::class, 'removeitem'])->name('cart.remove');
     // Route::post('/beli/{id}', [CartController::class, 'cart'])->name('checkout');
     Route::post('/pemesanan', [CartController::class, 'checkout'])->name('pemesanan');
+    Route::post('/pembelian', [CartController::class, 'pembelian'])->name('pembelian');
     Route::get('/pesanan/success', [CartController::class, 'success'])->name('success');
 
     // view order
     Route::get('/view', [ViewOrderController::class, 'show'])->name('view');
-});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //history
+    Route::get('/history', [HistoryController::class, 'show'])->name('history');});

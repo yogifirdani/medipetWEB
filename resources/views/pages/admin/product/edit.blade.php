@@ -30,15 +30,15 @@
 
                 <form action="{{ url('/products/' . $product->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT') <!-- Use PUT or PATCH for update -->
+                    @method('PUT') 
 
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Nama</label>
-                                    <input type="text" class="form-control" name="nama"
-                                        value="{{ $product['nama'] }}">
+                                    <label>Nama Produk</label>
+                                    <input type="text" class="form-control" name="nama_produk"
+                                        value="{{ $product['nama_produk'] }}">
                                 </div>
                                 <div class="form-group">
                                     <label>Stok</label>

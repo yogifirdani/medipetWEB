@@ -4,22 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class manage_order extends Model
+class ManageOrder extends Model
 {
     use HasFactory;
 
-    protected $table = "manage_order";
-    protected $primaryKey = "id_orders";
+    protected $table = 'manage_order';
+    protected $primaryKey = 'id_orders';
     protected $fillable = [
-        "id_cust",
-        "id_product",
-        "address",
-        "phone",
-        "jumlah_pembelian",
-        "atm",
-        "no_rekening",
-        "status_pesanan"
+        'id_cust',
+        'id_product',
+        'jumlah_pembelian',
+        'total_harga',
+        // 'atm',
+        // 'no_rekening',
+        'status_pesanan',
     ];
 
     public function user()
@@ -34,6 +34,6 @@ class manage_order extends Model
 
     public function co()
     {
-        return $this->hasOne(checkout::class, 'no_rekening');
+        return $this->HasOne(Checkout::class, 'id_orders', 'id_orders');
     }
 }

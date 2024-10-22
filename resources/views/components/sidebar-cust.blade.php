@@ -4,7 +4,7 @@
             <a href="{{ url('/admin') }}">MEDIPET</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">Mp</a>
+            <a href="index.html">MEDIPET</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Beranda</li>
@@ -12,7 +12,7 @@
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Data Diri</span></a>
                 <ul class="dropdown-menu">
                     <li class=''>
-                        <a class="nav-link" href="#">Riwayat Pesanan</a>
+                        <a class="nav-link" href="/history">Riwayat Pesanan</a>
                     </li>
                     <li class=" ">
                         <a class="nav-link" href="/profile">Profile</a>

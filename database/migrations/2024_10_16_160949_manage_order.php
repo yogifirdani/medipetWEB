@@ -16,8 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_cust');
             $table->unsignedBigInteger('id_product');
             $table->integer('jumlah_pembelian');
-            $table->Integer('total_harga');
-            $table->string('status_pesanan', ['ditolak', 'belum_bayar', 'lunas']);
+            $table->integer('total_harga');
+            // $table->string('atm');
+            // $table->bigInteger('no_rekening')->nullable();
+            $table->enum('status_pesanan', ['ditolak', 'proses', 'dikirim', 'lunas'])->default('proses');
             $table->timestamps();
 
             $table->foreign('id_cust')->references('id')->on('users');

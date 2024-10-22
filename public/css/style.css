@@ -709,7 +709,7 @@ select.form-control:not([size]):not([multiple]) {
   background-color: #47c363;
 }
 .alert.alert-info {
-  background-color: #3abaf4;
+  background-color: #006ea1;
 }
 .alert.alert-warning {
   background-color: #ffa426;

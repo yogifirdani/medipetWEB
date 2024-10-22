@@ -43,40 +43,40 @@ class CatalogController extends Controller
         }
     }
 
-    //keranjang
-    public function addToCart(Request $request, $id)
-    {
-        try {
-            $product = Product::findOrFail($id);
+    // //keranjang
+    // public function addToCart(Request $request, $id)
+    // {
+    //     try {
+    //         $product = Product::findOrFail($id);
 
-            // Ambil keranjang dari sesi, atau buat baru jika tidak ada
-            $cart = session()->get('cart', []);
+    //         // Ambil keranjang dari sesi, atau buat baru jika tidak ada
+    //         $cart = session()->get('cart', []);
 
-            // Jika produk sudah ada di keranjang, tambahkan kuantitasnya
-            if (isset($cart[$id])) {
-                $cart[$id]['quantity']++;
-            } else {
-                // Jika tidak ada, tambahkan produk dengan kuantitas 1
-                $cart[$id] = [
-                    "name" => $product->nama,
-                    "price" => $product->harga,
-                    "quantity" => 1,
-                    "image" => $product->gambar // Sesuaikan atribut gambar jika ada
-                ];
-            }
+    //         // Jika produk sudah ada di keranjang, tambahkan kuantitasnya
+    //         if (isset($cart[$id])) {
+    //             $cart[$id]['quantity']++;
+    //         } else {
+    //             // Jika tidak ada, tambahkan produk dengan kuantitas 1
+    //             $cart[$id] = [
+    //                 "name" => $product->nama,
+    //                 "price" => $product->harga,
+    //                 "quantity" => 1,
+    //                 "image" => $product->gambar // Sesuaikan atribut gambar jika ada
+    //             ];
+    //         }
 
-            // Simpan kembali ke sesi
-            session()->put('cart', $cart);
+    //         // Simpan kembali ke sesi
+    //         session()->put('cart', $cart);
 
-            return redirect()->route('catalogs.show', $id)->with('success', 'Produk ditambahkan ke keranjang!');
-        } catch (\Exception $e) {
-            return back()->withError($e->getMessage())->withInput();
-        }
-    }
+    //         return redirect()->route('catalogs.show', $id)->with('success', 'Produk ditambahkan ke keranjang!');
+    //     } catch (\Exception $e) {
+    //         return back()->withError($e->getMessage())->withInput();
+    //     }
+    // }
 
-    public function viewCart()
-    {
-        $cart = session()->get('cart', []);
-        return view('pages.app.katalog.cart', compact('cart'));
-    }
+    // public function viewCart()
+    // {
+    //     $cart = session()->get('cart', []);
+    //     return view('pages.app.katalog.cart', compact('cart'));
+    // }
 }

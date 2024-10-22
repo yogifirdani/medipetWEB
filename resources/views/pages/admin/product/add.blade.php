@@ -26,9 +26,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nama Produk</label>
-                                    <input type="text" class="form-control" name="nama" placeholder="Nama">
+                                    <input type="text" class="form-control" name="nama_produk" placeholder="Nama Produk">
                                 </div>
-                               
+
                                 <div class="row">
                                     <!-- Kolom Kiri -->
                                     <div class="col-md-6">

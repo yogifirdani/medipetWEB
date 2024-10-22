@@ -17,7 +17,7 @@
                                 style="background-image: url('{{ asset('storage/gambar-produk/'.$product['image']) }}');">
                             </div>
                             <div class="article-title">
-                                <h2>{{ $product['name'] }}</h2>
+                                <h2>{{ $product['nama_produk'] }}</h2>
                             </div>
                         </div>
                         <div class="article-details">

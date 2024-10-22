@@ -13,7 +13,7 @@ class ProductController extends Controller
         try {
             $query = $request->input('q');
             if ($query) {
-                $products = Product::where('nama', 'like', '%' . $query . '%')
+                $products = Product::where('nama_produk', 'like', '%' . $query . '%')
                     ->orWhere('kategori', 'like', '%' . $query . '%')
                     ->get();
             } else {
@@ -35,7 +35,7 @@ class ProductController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                "nama" => "required|string",
+                "nama_produk" => "required|string",
                 "jenis_hewan" => "required|string",
                 "kategori" => "required|string",
                 "merek" => "required",
@@ -56,7 +56,7 @@ class ProductController extends Controller
             $file->move(public_path('/product'), $fileName);
 
             Product::create([
-                "nama" => $request->nama,
+                "nama_produk" => $request->nama_produk,
                 "jenis_hewan" => $request->jenis_hewan,
                 "kategori" => $request->kategori,
                 "merek" => $request->merek,
@@ -100,7 +100,7 @@ class ProductController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                "nama" => "required",
+                "nama_produk" => "required",
                 // "kategori" => "required|in:grooming,vaksin,item",
                 "stok" => "required",
                 "harga" => "required",
@@ -115,7 +115,7 @@ class ProductController extends Controller
 
             $product = Product::findOrFail($id);
 
-            $data = $request->only(['nama', 'stok', 'harga', 'deskripsi', 'kadaluarsa']);
+            $data = $request->only(['nama_produk', 'stok', 'harga', 'deskripsi', 'kadaluarsa']);
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $fileName = time() . '_' . $file->getClientOriginalName();

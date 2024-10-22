@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\manage_order;
+use App\Models\ManageOrder;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class ManageOrderController extends Controller
 {
@@ -14,7 +17,7 @@ class ManageOrderController extends Controller
         $year = $request->input('year');
         $category = $request->input('category');
 
-        $query = manage_order::with(['user', 'product']);
+        $query = ManageOrder::with(['user', 'product', 'co']);
 
         if ($month) {
             $query->whereMonth('created_at', $month);
@@ -25,7 +28,7 @@ class ManageOrderController extends Controller
         }
 
         if ($category && $category !== 'Semua') {
-            $query->whereHas('product', function($q) use ($category) {
+            $query->whereHas('product', function ($q) use ($category) {
                 $q->where('category', $category);
             });
         }
@@ -40,7 +43,8 @@ class ManageOrderController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.manage_order.create');
+        $products = Product::all();
+        return view('pages.admin.manage_order.add', compact('products'));
     }
 
     /**
@@ -49,64 +53,82 @@ class ManageOrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_cust' => 'required|exists:users,id',
-            'id_product' => 'required|exists:products,id',
+            'id_product' => 'required|exists:product,id',
             'jumlah_pembelian' => 'required|integer|min:1',
-            'status_pesanan' => 'required|in:ditolak,belum_bayar,lunas',
+            'atm' => 'required|string',
         ]);
 
         $product = Product::findOrFail($request->id_product);
 
-        if ($product->stock < $request->input('jumlah_pembelian')) {
+        if ($product->stok < $request->jumlah_pembelian) {
             return redirect()->back()->with('error', 'Stok produk tidak mencukupi.');
         }
 
-        $total = $product->stok - $request->jumlah_pembelian;
-        $product->update(['stok' => $total]);
+        $totalHarga = $product->harga * $request->jumlah_pembelian;
+        // $data = ManageOrder::create([
+        //     'id_cust' => Auth::user()->id,
+        //     'id_product' => $request->id_product,
+        //     'jumlah_pembelian' => $request->jumlah_pembelian,
+        //     'total_harga' => $totalHarga,
+        //     'status_pesanan' => 'lunas',
+        // ]);
+        // dd($data->toArray());
 
+        DB::beginTransaction();
+        try {
+            ManageOrder::create([
+                'id_cust' => 2,
+                'id_product' => $request->id_product,
+                'jumlah_pembelian' => $request->jumlah_pembelian,
+                'total_harga' => $totalHarga,
+                'status_pesanan' => 'lunas',
+            ]);
 
-        return redirect()->route('transaksi.index')->with('success', 'Order berhasil dibuat.');
+            DB::commit();
+            return redirect()->route('transaksi.index')->with('success', 'Order berhasil dibuat dan stok produk telah diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan pesanan: ' . $e->getMessage());
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(manage_order $manage_order)
+    public function show(ManageOrder $ManageOrder)
     {
-        return view('pages.admin.manage_order.show', compact('manage_order'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(manage_order $manage_order)
-    {
-        return view('pages.admin.manage_order.edit', compact('manage_order'));
+        return view('pages.admin.ManageOrder.show', compact('ManageOrder'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $order = manage_order::find($id);
+    {
+        $order = ManageOrder::find($id);
 
-    if (!$order) {
-        return redirect()->back()->with('error', 'Pesanan tidak ditemukan.');
+        if (!$order) {
+            return redirect()->back()->with('error', 'Pesanan tidak ditemukan.');
+        }
+
+        $order->status_pesanan = $request->input('status_pesanan');
+        $order->save();
+
+        return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui.');
     }
 
-    $order->status_pesanan = $request->input('status_pesanan');
-    $order->save();
-
-    return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui.');
-}
+    public function getProductPrice($id)
+    {
+        $product = Product::findOrFail($id);
+        return response()->json(['harga' => $product->harga]);
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(manage_order $manage_order)
+    public function destroy(ManageOrder $ManageOrder)
     {
-        $manage_order->delete();
+        $ManageOrder->delete();
 
         return redirect('/transaksi')->with('success', 'Order berhasil dihapus.');
     }

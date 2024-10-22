@@ -51,10 +51,10 @@
                 @endforelse
             </div>
 
-            <!-- Pagination -->
+            {{-- <!-- Pagination -->
             <div class="d-flex justify-content-center mt-4">
                 {{ $products->withQueryString()->links() }}
-            </div>
+            </div> --}}
         </div>
     </section>
 </div>

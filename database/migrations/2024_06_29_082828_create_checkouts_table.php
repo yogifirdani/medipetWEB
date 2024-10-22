@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_orders');
             $table->unsignedBigInteger('id_cust');
             $table->enum('atm', ['bri', 'bca', 'bni', 'mandiri'])->nullable();
-            $table->bigInteger('no_rekening');
+            $table->bigInteger('no_rekening')->nullable();
             $table->date('check_in_date');
             $table->timestamps();
 

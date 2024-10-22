@@ -26,4 +26,9 @@ class Booking extends Model
     {
         return $this->belongsTo(Category::class, 'service_type', 'id');
     }
+
+    public static function jmlJadwal()
+    {
+        return self::count();
+    }
 }

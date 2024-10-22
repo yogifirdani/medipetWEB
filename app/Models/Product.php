@@ -12,7 +12,7 @@ class Product extends Model
     protected $table = "product";
     protected $primaryKey = 'id';
     protected $fillable = [
-        'nama',
+        'nama_produk',
         'jenis_hewan',
         'kategori',
         'merek',
@@ -28,6 +28,19 @@ class Product extends Model
     {
         return self::count();
     }
+
+     // Relasi dengan model Restock
+     public function restocks()
+    {
+        return $this->hasMany(Restock::class, 'id_product');
+    }
+
+     // Fungsi untuk menambahkan stok setelah restock
+     public function addStock($quantity)
+     {
+         $this->stok += $quantity; //tambah stok
+         $this->save();
+     }
 
     // public static function jmlStok($category)
     // {

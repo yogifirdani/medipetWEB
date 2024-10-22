@@ -23,7 +23,8 @@
                     @endif
 
                     <a href="{{ route('products.add') }}" class="btn btn-primary mt-5">
-                        <h5>Menambahkan Produk</h5></a>
+                        <h5>Menambahkan Buku</h5></a>
+
                     <div class="card mt-4">
                         <div class="card-header">
                             <div class="search-element">
@@ -40,7 +41,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Gambar</th>
-                                        <th>Nama</th>
+                                        <th>Nama Produk</th>
                                         <th>Jenis Hewan</th>
                                         <th>Kategori</th>
                                         <th>Merek</th>
@@ -55,7 +56,7 @@
                                         <tr>
                                             <td>{{ $product->id }}</td>
                                             <td><img src="{{ url('/product/' . $product->image) }}" alt="" width="100"></td>
-                                            <td>{{ $product->nama }}</td>
+                                            <td>{{ $product->nama_produk }}</td>
                                             <td>{{ $product->jenis_hewan }}</td>
                                             <td>{{ $product->kategori }}</td>
                                             <td>{{ $product->merek }}</td>

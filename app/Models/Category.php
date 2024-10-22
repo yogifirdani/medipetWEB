@@ -25,4 +25,9 @@ class Category extends Model
     {
         return $this->hasMany(Booking::class, 'service_type');
     }
+
+    public static function jmlLayanan()
+    {
+        return self::count();
+    }
 }

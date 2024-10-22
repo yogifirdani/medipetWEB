@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class checkout extends Model
+class Checkout extends Model
 {
     use HasFactory;
     protected $table = "checkout";
@@ -25,6 +25,6 @@ class checkout extends Model
 
     public function manage_order()
     {
-        return $this->belongsTo(manage_order::class, 'id_orders');
+        return $this->belongsTo(ManageOrder::class, 'id_orders');
     }
 }
