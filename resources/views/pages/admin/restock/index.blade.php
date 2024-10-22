@@ -34,10 +34,13 @@
                                 <form action="{{ route('restocks.index') }}" class="form-inline" method="GET">
                                     <input class="form-control" type="search" name="q" placeholder="Search"
                                         aria-label="Search" data-width="350" value="{{ request('q') }}">
+                                    <input class="form-control" type="date" name="tanggal" placeholder="Tanggal Pembelian">
+
                                     <button class="btn" type="submit"><i class="fas fa-search"></i></button>
                                 </form>
                             </div>
                         </div>
+
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table-striped table-md table">

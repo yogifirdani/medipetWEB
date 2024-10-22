@@ -15,13 +15,18 @@ class RestockController extends Controller
     {
         // pencarian
         $query = $request->get('q');
-        $restocks = Restock::with('product')
-            ->when($query, function ($queryBuilder) use ($query) {
-                return $queryBuilder->whereHas('product', function ($q) use ($query) {
-                    $q->where('nama_produk', 'like', '%' . $query . '%');
-                });
-            })
-            ->get();
+$tanggal = $request->get('tanggal'); // Mengambil input tanggal dari request
+
+$restocks = Restock::with('product')
+    ->when($query, function ($queryBuilder) use ($query) {
+        return $queryBuilder->whereHas('product', function ($q) use ($query) {
+            $q->where('nama_produk', 'like', '%' . $query . '%');
+        });
+    })
+    ->when($tanggal, function ($queryBuilder) use ($tanggal) {
+        return $queryBuilder->whereDate('tanggal_pembelian', $tanggal); // Filter berdasarkan tanggal pembelian
+    })
+    ->get();
 
         return view('pages.admin.restock.index', compact('restocks'));
     }

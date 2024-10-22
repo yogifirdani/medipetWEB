@@ -15,7 +15,7 @@ class AdminController extends Controller
         $totalUsers = User::where('role_id', 2)->count();
         $totalProducts = Product::count();
         $totalLayanan = Booking::count();
-        $totalOrders = manage_order::count();
+        // $totalOrders = Manage_order::count();
 
         $user = Auth::user()->name;
         return view('pages.admin.dashboard');

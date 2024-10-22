@@ -23,7 +23,7 @@
                     @endif
 
                     <a href="{{ route('products.add') }}" class="btn btn-primary mt-5">
-                        <h5>Menambahkan Buku</h5></a>
+                        <h5>Menambahkan Produk</h5></a>
 
                     <div class="card mt-4">
                         <div class="card-header">

@@ -15,7 +15,7 @@
 
             <div class="section-body mt-5">
                 <div class="card ">
-                    <form action={{ route('transaksi.store') }} method="POST" >
+                    <form action={{ route('transaksi.store') }} method="POST">
                         @csrf
 
                         <div class="card-body">
@@ -27,7 +27,7 @@
                                             <select class="form-control" id="id_product" name="id_product" required>
                                                 <option value="">Pilih Produk</option>
                                                 @foreach ($products as $product)
-                                                    <option value="{{ $product->id }}">{{ $product->nama }}</option>
+                                                    <option value="{{ $product->id }}">{{ $product->nama_produk }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

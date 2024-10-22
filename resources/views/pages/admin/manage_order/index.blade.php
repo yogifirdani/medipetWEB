@@ -77,7 +77,7 @@
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>
                                                 <td class="text-center">{{ $order->user->name }}</td>
-                                                <td class="text-center">{{ $order->product->nama }}</td>
+                                                <td class="text-center">{{ $order->product->nama_produk }}</td>
                                                 <td class="text-center">{{ $order->user->address }}</td>
                                                 <td class="text-center">{{ $order->jumlah_pembelian }}</td>
                                                 <td class="text-center">{{ $order->product->harga }}</td>

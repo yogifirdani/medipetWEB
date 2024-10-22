@@ -37,7 +37,7 @@
                                                     alt="Product Image" width="100"></td>
                                             <td class="text-center">{{ $order->product->nama_produk }}</td>
                                             <td class="text-center">{{ $order->product->kategori }}</td>
-                                            <td class="text-center">{{ $order->manage_orger->jumlah_pembelian }}</td>
+                                            <td class="text-center">{{ $order->jumlah_pembelian }}</td>
                                             <td class="text-center">Rp {{ number_format($order->total_harga, 0, ',', '.') }}
                                             </td>
                                             <td class="text-center">
@@ -45,8 +45,8 @@
                                                     <span class="badge badge-secondary">Proses</span>
                                                 @elseif($order->status_pesanan == 'ditolak')
                                                     <span class="badge badge-danger">Pesanan ditolak</span>
-                                                {{-- @elseif($order->status_pesanan == 'dikirim')
-                                                    <span class="badge badge-success">Pesanan Dikirim</span> --}}
+                                                @elseif($order->status_pesanan == 'dikirim')
+                                                    <span class="badge badge-success">Pesanan Dikirim</span>
                                                 @elseif($order->status_pesanan == 'lunas')
                                                     <span class="badge badge-success">Selesai</span>
                                                 @endif
