@@ -40,8 +40,8 @@ use function PHPSTORM_META\type;
 
 //  jika user belum login
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/', [AuthController::class, 'login']);
-    Route::post('/', [AuthController::class, 'dologin']);
+    Route::get('/', [AuthController::class, 'login'])->name('login');
+    Route::post('/', [AuthController::class, 'dologin'])->name('login');
 
     //regist customer
     Route::get('register', [AuthController::class, 'register'])->name('register');

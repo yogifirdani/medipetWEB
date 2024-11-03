@@ -14,7 +14,8 @@ class KonsultasiController extends Controller
         $searchTerm = $request->query('search');
 
         if ($searchTerm) {
-            $konsultasi = Konsultasi::with(['user', 'comments'])->where('content', 'like', '%' . $searchTerm . '%')->get();
+            $konsultasi = Konsultasi::with(['user', 'comments'])
+            ->where('content', 'like', '%' . $searchTerm . '%')->get();
         } else {
             $konsultasi = Konsultasi::with(['user', 'comments'])->get();
         }
