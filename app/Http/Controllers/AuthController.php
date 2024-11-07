@@ -82,19 +82,20 @@ class AuthController extends Controller
         // Validate the request data
        $request->validate([
     'name' => 'required|string|max:255',
-    'email' => 'required|string|email|max:255|unique:users',
+    'email' => 'required|string|email|min:5|max:30|unique:users',
     'password' => 'required|string|min:8|max:16|confirmed',
 ], [
     'name.required' => 'Nama harus diisi.',
     'email.required' => 'Email harus diisi.',
     'email.email' => 'Email tidak valid. Pastikan format email yang Anda masukkan benar.',
+    'email.min' => 'Email terlalu pendek',
+    'email.max' => 'Email terlalu panjang',
     'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
     'password.required' => 'Password harus diisi.',
     'password.min' => 'Password minimal 8 karakter. Silakan masukkan password yang lebih panjang.',
     'password.max' => 'Password terlalu panjang. Maksimal 16 karakter.',
     'password.confirmed' => 'Password dan konfirmasi password tidak cocok. Silakan coba lagi.',
 ]);
-
 
 
 // Create a new user
