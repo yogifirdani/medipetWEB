@@ -15,7 +15,6 @@
             </div>
             <form method="post" action="{{ route('pembelian') }}" class="card rounded-4 mt-6">
                 @csrf
-                @csrf
                 <input type="hidden" name="orders" value="{{ json_encode($selectedCart) }}">
                 <div class="card rounded-4 mt-6">
                     <div class="card-body p-4">
@@ -46,7 +45,7 @@
                                         <img src="{{ asset('product/' . $item['image']) }}" class="card-img-top">
                                     </div>
                                     <div class="col-md-3 col-lg-3 col-xl-3">
-                                        <span class="px-3">{{ $item['nama'] }}</span>
+                                        <span class="px-3">{{ $item['nama_produk'] }}</span>
                                         <div class="px-3">{{ $item['quantity'] }} x</div>
                                         <div class="invoice-detail-value mt-2 px-3">Rp. {{ $item['harga'] }}</div>
                                     </div>
@@ -70,7 +69,13 @@
                             <div class="col-md-4 mt-4">
                                 <div class="form-group">
                                     <label for="no_rekening">No.Rekening</label>
-                                    <input type="text" class="form-control" id="no_rekening" name="no_rekening" required>
+                                    <input type="text" class="form-control @error('no_rekening') is-invalid @enderror"
+                                        id="no_rekening" name="no_rekening">
+                                    @error('no_rekening')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

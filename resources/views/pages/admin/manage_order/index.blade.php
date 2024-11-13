@@ -76,9 +76,9 @@
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>
-                                                <td class="text-center">{{ $order->user->name }}</td>
+                                                <td class="text-center">{{ $order->user->name ?? '-' }}</td>
                                                 <td class="text-center">{{ $order->product->nama_produk }}</td>
-                                                <td class="text-center">{{ $order->user->address }}</td>
+                                                <td class="text-center">{{ $order->user->address?? '-'  }}</td>
                                                 <td class="text-center">{{ $order->jumlah_pembelian }}</td>
                                                 <td class="text-center">{{ $order->product->harga }}</td>
                                                 <td class="text-center">
@@ -90,8 +90,8 @@
                                                         <p class="badge badge-secondary">Proses</p>
                                                     @elseif($order->status_pesanan == 'ditolak')
                                                         <p class="badge badge-danger">Pesanan ditolak</p>
-                                                    @elseif($order->status_pesanan == 'dikirim')
-                                                        <p class="badge badge-info">Dikirim</p>
+                                                    {{-- @elseif($order->status_pesanan == 'dikirim')
+                                                        <p class="badge badge-info">Dikirim</p> --}}
                                                     @elseif($order->status_pesanan == 'lunas')
                                                         <p class="badge badge-success">Lunas</p>
                                                     @endif
@@ -114,13 +114,13 @@
                                                             <button type="submit" class="badge badge-danger">Tolak
                                                                 Pesanan</button>
                                                         </form>
-                                                        <form action="/transaksi/{{ $order->id_orders }}" method="post"
+                                                        {{-- <form action="/transaksi/{{ $order->id_orders }}" method="post"
                                                             class="d-inline">
                                                             @csrf
                                                             @method('POST')
                                                             <input type="hidden" name="status_pesanan" value="dikirim">
                                                             <button type="submit" class="badge badge-info">Dikirim</button>
-                                                        </form>
+                                                        </form> --}}
                                                     @endif
                                                 </td>
                                             </tr>

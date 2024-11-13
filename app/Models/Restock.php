@@ -18,6 +18,7 @@ class Restock extends Model
         'harga_satuan',
         'total_harga',
         'tanggal_pembelian',
+        'supplier',
     ];
 
 

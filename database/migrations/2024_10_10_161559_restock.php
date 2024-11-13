@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('harga_satuan');
             $table->integer('total_harga');
             $table->date('tanggal_pembelian');
+            $table->string('supplier');
             $table->timestamps();
 
         $table->foreign('id_product')->references('id')->on('product')->onDelete('cascade');

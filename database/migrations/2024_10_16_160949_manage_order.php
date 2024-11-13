@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('total_harga');
             // $table->string('atm');
             // $table->bigInteger('no_rekening')->nullable();
-            $table->enum('status_pesanan', ['ditolak', 'proses', 'dikirim', 'lunas'])->default('proses');
+            $table->enum('status_pesanan', ['ditolak', 'proses', 'lunas'])->default('proses');
             $table->timestamps();
 
             $table->foreign('id_cust')->references('id')->on('users');

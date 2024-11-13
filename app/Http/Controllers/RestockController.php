@@ -56,19 +56,19 @@ $restocks = Restock::with('product')
             'quantity' => 'required|integer|min:1',
             'harga_satuan' => 'required|integer|min:1',
             'tanggal_pembelian' => 'required|date',
+            'supplier' => 'required|string',
         ]);
 
-        // Menghitung total harga
+
         $validatedData['total_harga'] = $validatedData['quantity'] * $validatedData['harga_satuan'];
 
-        // Cek apakah produk ada
         $product = Product::find($request->id_product);
         if (!$product) {
             return redirect()->route('restocks.create')->with('error', 'Produk tidak ditemukan. Silakan pilih produk yang valid.');
         }
 
         $restock = Restock::create($request->all());
-        // Mengupdate stok produk
+
         $product->stok += $request->quantity;
         $product->save();
 
@@ -105,6 +105,7 @@ $restocks = Restock::with('product')
             'quantity' => 'required|integer|min:1',
             'harga_satuan' => 'required|integer|min:1',
             'tanggal_pembelian' => 'required|date',
+            'supplier' => 'required|string'
         ]);
 
         // Update data restock

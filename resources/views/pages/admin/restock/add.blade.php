@@ -17,7 +17,7 @@
             <div class="section-body">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Form Restock</h4>
+                        <h4>Form Pembelian</h4>
                     </div>
                     <div class="card-body">
                         @if ($errors->any())
@@ -64,6 +64,10 @@
                             <div class="form-group">
                                 <label for="tanggal_pembelian">Tanggal Pembelian</label>
                                 <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" class="form-control" value="{{ old('tanggal_pembelian') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier">Supplier</label>
+                                <input type="text" name="supplier" id="supplier" class="form-control" value="{{ old('supplier') }}" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                             <a href="{{ route('restocks.index') }}" class="btn btn-secondary">Batal</a>

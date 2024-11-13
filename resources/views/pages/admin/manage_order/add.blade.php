@@ -14,6 +14,11 @@
             </div>
 
             <div class="section-body mt-5">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <div class="card ">
                     <form action={{ route('transaksi.store') }} method="POST">
                         @csrf
@@ -24,12 +29,18 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label for="id_product">Nama Produk</label>
-                                            <select class="form-control" id="id_product" name="id_product" required>
+                                            <select class="form-control @error('id_product') is-invalid @enderror"
+                                                id="id_product" name="id_product">
                                                 <option value="">Pilih Produk</option>
                                                 @foreach ($products as $product)
                                                     <option value="{{ $product->id }}">{{ $product->nama_produk }}</option>
                                                 @endforeach
                                             </select>
+                                            @error('id_product')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="total_harga">Total Harga</label>
@@ -39,7 +50,8 @@
                                         <div class="form-group mb-3 col-12 col-md-5">
                                             <label for="atm">Metode Pembayaran</label>
                                             <br>
-                                            <select class="form-control" id="atm" name="atm" required>
+                                            <select class="form-control @error('atm') is-invalid @enderror" id="atm"
+                                                name="atm">
                                                 <option value="">- none -</option>
                                                 <option value="tunai">Tunai</option>
                                                 <option value="bri">BRI</option>
@@ -47,6 +59,11 @@
                                                 <option value="bni">BNI</option>
                                                 <option value="mandiri">Mandiri</option>
                                             </select>
+                                            @error('atm')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -54,8 +71,20 @@
                                     <div class="col-md-6">
                                         <div class="form-group mb-3">
                                             <label for="jumlah_pembelian">Jumlah Pembelian</label>
-                                            <input type="text" class="form-control" id="jumlah_pembelian"
-                                                name="jumlah_pembelian" placeholder="Jumlah pembelian" required>
+                                            <input type="text"
+                                                class="form-control @error('jumlah_pembelian') is-invalid @enderror"
+                                                id="jumlah_pembelian" name="jumlah_pembelian"
+                                                placeholder="Jumlah pembelian">
+                                            @error('jumlah_pembelian')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                            @if (session('error'))
+                                                <div class="alert alert-danger">
+                                                    {{ session('error') }}
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="harga">Harga</label>

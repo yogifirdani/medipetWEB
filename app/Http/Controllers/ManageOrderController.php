@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Checkout;
 use App\Models\ManageOrder;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -56,6 +57,11 @@ class ManageOrderController extends Controller
             'id_product' => 'required|exists:product,id',
             'jumlah_pembelian' => 'required|integer|min:1',
             'atm' => 'required|string',
+        ], [
+            'id_product.required' => 'Pilih product terlebih dahulu',
+            'jumlah_pembelian.required' => 'Jumlah pembelian wajib diisi',
+            'jumlah_pembelian.min' => 'Jumlah produk minimal 1',
+            'atm.required' => 'Metode pembayaran harus tercantum',
         ]);
 
         $product = Product::findOrFail($request->id_product);
@@ -65,24 +71,30 @@ class ManageOrderController extends Controller
         }
 
         $totalHarga = $product->harga * $request->jumlah_pembelian;
-        // $data = ManageOrder::create([
-        //     'id_cust' => Auth::user()->id,
-        //     'id_product' => $request->id_product,
-        //     'jumlah_pembelian' => $request->jumlah_pembelian,
-        //     'total_harga' => $totalHarga,
-        //     'status_pesanan' => 'lunas',
-        // ]);
-        // dd($data->toArray());
+
 
         DB::beginTransaction();
         try {
-            ManageOrder::create([
-                'id_cust' => 2,
+            $manage_Order = ManageOrder::create([
                 'id_product' => $request->id_product,
                 'jumlah_pembelian' => $request->jumlah_pembelian,
                 'total_harga' => $totalHarga,
                 'status_pesanan' => 'lunas',
             ]);
+
+
+            if (!$manage_Order->id_orders) {
+                throw new \Exception('ID pesanan gagal disimpan.');
+            }
+
+
+            Checkout::create([
+                'id_orders' => $manage_Order->id_orders,
+            'id_cust' => null,
+            'atm' => $request->atm,
+            'check_in_date' => now(),
+            ]);
+
 
             DB::commit();
             return redirect()->route('transaksi.index')->with('success', 'Order berhasil dibuat dan stok produk telah diperbarui.');

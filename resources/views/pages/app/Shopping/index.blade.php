@@ -37,7 +37,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-lg-3 col-xl-3">
                                                     <p class="nomargin" style="font-weight: bold; font-size: 150%;">
-                                                        {{ $details['nama'] }}</p>
+                                                        {{ $details['nama_produk'] }}</p>
                                                     <p data-th="harga">Rp.{{ $details['harga'] }}</p>
                                                 </div>
                                         <th>
@@ -81,7 +81,7 @@
                 </p>
             </div>
             <div class="mt-3 d-flex justify-content-end">
-                <form action="{{ route('pemesanan') }}" method="POST">
+                <form action="{{ route('co') }}" method="POST">
                     @csrf
                     <input type="hidden" name="selected_items" id="selectedItems">
                     <button type="submit" class="btn btn-primary btn-lg me-2">Pesan</button>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('checkout', function (Blueprint $table) {
             $table->bigIncrements('id_co');
             $table->unsignedBigInteger('id_orders');
-            $table->unsignedBigInteger('id_cust');
+            $table->unsignedBigInteger('id_cust')->nullable();;
             $table->enum('atm', ['bri', 'bca', 'bni', 'mandiri'])->nullable();
             $table->bigInteger('no_rekening')->nullable();
             $table->date('check_in_date');

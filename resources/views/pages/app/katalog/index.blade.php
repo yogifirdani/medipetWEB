@@ -30,12 +30,12 @@
                             </div>
                             <div class="article-details">
                                 <div class="article-title">
-                                    <h2><a href="{{ route('catalogs.show', $product->id) }}">{{ $product->nama }}</a></h2>
+                                    <h2><a href="{{ route('catalogs.show', $product->id) }}">{{ $product->nama_produk }}</a></h2>
                                     <p><h4>Rp. {{ $product->harga }}</h4></p>
                                 </div>
                                 {{-- <p>{{ Str::limit($product->deskripsi, 100) }}</p> --}}
                                 <div class="article-cta">
-                                    <a href="{{ route('catalogs.show', $product->id) }}" class="btn btn-primary">Beli Sekarang</a>
+                                    <a href="{{ route('catalogs.show', $product->id) }}" class="btn btn-primary">Detail Produk</a>
                                     {{-- <a class="btn btn-outline-secondary">IDR {{ number_format($product->harga, 0, ',', '.') }}</a> --}}
                                     <a href="{{ route('cart.addtocart', $product->id) }}" class="btn btn-primary">
                                         <i class="fas fa-shopping-cart"></i>

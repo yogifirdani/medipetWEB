@@ -23,7 +23,7 @@ class CatalogController extends Controller
                 });
             }
 
-            $products = $query->paginate(10); // Pagination
+            $products = $query->paginate(); // Pagination
 
             return view('pages.app.katalog.index', compact('products'));
         } catch (\Exception $e) {

@@ -18,6 +18,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\RestockController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ViewOrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -84,7 +85,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::get('/transaksi/{id}', [ManageOrderController::class, 'show'])->name('transaksi.show');
     Route::post('/transaksi', [ManageOrderController::class, 'store'])->name('transaksi.store');
     Route::post('/transaksi/{id}', [ManageOrderController::class, 'update'])->name('transaksi.update');
-    Route::delete('/transaksi/{id}', [ManageOrderController::class,'destroy'])->name('transaksi.destrpy');
+    Route::delete('/transaksi/{id}', [ManageOrderController::class, 'destroy'])->name('transaksi.destrpy');
 
     Route::get('/get-product-price/{id}', [ManageOrderController::class, 'getProductPrice']);
 
@@ -115,6 +116,9 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::resource('restocks', RestockController::class);
     // Route::delete('/restocks/{id_restock}', [RestockController::class, 'destroy'])->name('restocks.destroy');
 
+    //laporan keuangan
+    Route::get('/report', [TransactionController::class, 'index'])->name('report.index');
+    Route::get('/report/pdf', [TransactionController::class, 'generatePDF'])->name('report.pdf');
 });
 
 // untuk customer
@@ -150,6 +154,7 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function () {
     Route::delete('/cart/{id}', [CartController::class, 'removeitem'])->name('cart.remove');
     // Route::post('/beli/{id}', [CartController::class, 'cart'])->name('checkout');
     Route::post('/pemesanan', [CartController::class, 'checkout'])->name('pemesanan');
+    Route::get('/pemesanan', [CartController::class, 'co'])->name('co');
     Route::post('/pembelian', [CartController::class, 'pembelian'])->name('pembelian');
     Route::get('/pesanan/success', [CartController::class, 'success'])->name('success');
 
@@ -157,4 +162,6 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function () {
     Route::get('/view', [ViewOrderController::class, 'show'])->name('view');
 
     //history
-    Route::get('/history', [HistoryController::class, 'show'])->name('history');});
+    Route::get('/history', [HistoryController::class, 'show'])->name('history');
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
+});
