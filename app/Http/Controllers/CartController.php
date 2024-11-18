@@ -168,7 +168,7 @@ class CartController extends Controller
             'atm.required' => 'Metode pembayaran wajib diisi.',
             'no_rekening.required' => 'No rekening wajib diisi.',
             'no_rekening.min' => 'No rekening minimal 9 karakter.',
-            'no_rekening.max' => 'No rekening maksimal 20 karakter',
+            'no_rekening.max' => 'No rekening maksimal 15 karakter',
         ]);
 
         // Mengambil item yang dipilih dan keranjang dari session

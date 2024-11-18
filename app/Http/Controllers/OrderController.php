@@ -70,7 +70,7 @@ class OrderController extends Controller
             'booking_date' => 'required|date',
             'take_date' => 'date|nullable',
             'start_time' => 'required',
-            'status' => 'required',
+            'status' => 'nullable',
             'notes' => 'nullable',
         ]);
 
@@ -115,7 +115,7 @@ class OrderController extends Controller
             'take_date' => 'date|nullable',
             'start_time' => 'required',
             'total_price' => 'required',
-            'status' => 'required',
+            'status' => 'nullable',
         ]);
 
         $booking = Booking::find($id);

@@ -34,13 +34,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Full Name</label>
+                                        <label for="name">Nama Panjang</label>
                                         <input type="text" class="form-control" id="name" name="name" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="phone">Phone Number</label>
+                                        <label for="phone">Nomor Telepon</label>
                                         <input type="text" class="form-control" id="phone" name="phone" required>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="status">Status Pesanan</label>
@@ -127,7 +127,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">

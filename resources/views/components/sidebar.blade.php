@@ -42,10 +42,25 @@
                     <span>Konsultasi</span></a>
             </li>
 
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fa-solid fa-file-invoice"></i><span>Laporan</span></a>
+                <ul class="dropdown-menu">
+                    <li class=''>
+                        <a class="nav-link" href="/pengeluaran"><i class="fa-solid fa-money-bill"></i><span> Laporan Pembelian</span></a>
+                    </li>
+                    <li class=" ">
+                        <a class="nav-link" href="/pemasukan"><i class="fa-solid fa-cart-arrow-down"></i><span> Laporan Penjualan</span></a>
+                    </li>
+                </ul>
+            </li>
+
             <div class="hide-sidebar-mini mt-4 mb-4 p-3">
-                <a href="/report" class="btn btn-primary btn-lg btn-block btn-icon-split">
-                    <i class="fas fa-rocket"></i> Laporan Keuangan
+                <a href="#" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                    <i class="fa-solid fa-tags"></i>
+                    <span>Katalog</span>
                 </a>
             </div>
+
+
     </aside>
 </div>

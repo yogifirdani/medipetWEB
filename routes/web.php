@@ -13,6 +13,8 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HistoryPesanan;
 use App\Http\Controllers\ManageOrderController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PemasukanController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -116,9 +118,10 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::resource('restocks', RestockController::class);
     // Route::delete('/restocks/{id_restock}', [RestockController::class, 'destroy'])->name('restocks.destroy');
 
-    //laporan keuangan
-    Route::get('/report', [TransactionController::class, 'index'])->name('report.index');
-    Route::get('/report/pdf', [TransactionController::class, 'generatePDF'])->name('report.pdf');
+    Route::get('/pemasukan', [PemasukanController::class, 'index'])->name('laporan.pemasukan');
+    Route::get('/pemasukan/pdf', [PemasukanController::class, 'generatePDF'])->name('laporan.pemasukan.pdf');
+    Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('laporan.pengeluaran');
+    Route::get('/pengeluaran/pdf', [PengeluaranController::class, 'generatePDF'])->name('laporan.pengeluaran.pdf');
 });
 
 // untuk customer

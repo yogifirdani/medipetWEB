@@ -105,7 +105,7 @@ class ManageOrderController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource.k
      */
     public function show(ManageOrder $ManageOrder)
     {

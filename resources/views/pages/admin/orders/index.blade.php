@@ -17,9 +17,9 @@
                     </div>
                 @endif
 
-                <a href="{{ url('/categories') }}" class="btn btn-primary mt-5">
+                {{-- <a href="{{ url('/categories') }}" class="btn btn-primary mt-5">
                     <h5>Kelola Kategori</h5>
-                </a>
+                </a> --}}
                 <a href="{{ route('orders.create') }}" class="btn btn-primary mt-5">
                     <h5>Tambah Pesanan</h5>
                 </a>
