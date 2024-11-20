@@ -13,12 +13,13 @@ class Restock extends Model
     protected $primaryKey = 'id_restock';
     protected $fillable = [
         'id_product',
+        'id_supplier',
         'nama_produk',
         'quantity',
         'harga_satuan',
         'total_harga',
         'tanggal_pembelian',
-        'supplier',
+        'id_supplier',
     ];
 
 
@@ -26,5 +27,11 @@ class Restock extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'id_product');
+    }
+
+    // Relasi dengan tabel suppliers
+    public function suppliers()
+    {
+        return $this->belongsTo(Supplier::class, 'id_supplier');
     }
 }

@@ -18,9 +18,7 @@
                     <li class=" ">
                         <a class="nav-link" href="/products"><i class="fa-solid fa-store"></i><span> Kelola Produk</span></a>
                     </li>
-                    <li class=" ">
-                        <a class="nav-link" href="/restocks"><i class="fa-solid fa-square-plus"></i><span> Restock Produk</span></a>
-                    </li>
+
                 </ul>
             </li>
 
@@ -37,9 +35,21 @@
                 </ul>
             </li>
 
-            <li class="{{ Request::is('konsultasi') ? 'active' : '' }}">
+            {{-- <li class="{{ Request::is('konsultasi') ? 'active' : '' }}">
                 <a class="nav-link" href="/konsultasiadmin"><i class="fa-regular fa-comment-dots"></i>
                     <span>Konsultasi</span></a>
+            </li> --}}
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fa-solid fa-boxes-packing"></i><span>Pembelian</span></a>
+                <ul class="dropdown-menu">
+                    <li class=''>
+                        <a class="nav-link" href="/suppliers"><i class="fa-solid fa-truck-field"></i><span> Supplier</span></a>
+                    </li>
+                    <li class=" ">
+                        <a class="nav-link" href="/restocks"><i class="fa-solid fa-square-plus"></i><span> Restock Produk</span></a>
+                    </li>
+                </ul>
             </li>
 
             <li class="nav-item dropdown">
@@ -55,9 +65,9 @@
             </li>
 
             <div class="hide-sidebar-mini mt-4 mb-4 p-3">
-                <a href="#" class="btn btn-primary btn-lg btn-block btn-icon-split">
-                    <i class="fa-solid fa-tags"></i>
-                    <span>Katalog</span>
+                <a href="/konsultasiadmin" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                    <i class="fa-regular fa-comment-dots"></i>
+                    <span>Konsultasi</span>
                 </a>
             </div>
 

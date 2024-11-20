@@ -20,6 +20,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\RestockController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ViewOrderController;
 use Illuminate\Support\Facades\Route;
@@ -118,6 +119,15 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::resource('restocks', RestockController::class);
     // Route::delete('/restocks/{id_restock}', [RestockController::class, 'destroy'])->name('restocks.destroy');
 
+    //supplier
+    Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
+    Route::post('/suppliers', [SupplierController::class, 'store'])->name('suppliers.store');
+    Route::get('/suppliers/create', [SupplierController::class, 'create'])->name('suppliers.create');
+    Route::get('/suppliers/{id}/edit', [SupplierController::class, 'edit'])->name('suppliers.edit');
+    Route::put('/suppliers/{id}', [SupplierController::class, 'update'])->name('suppliers.update');
+    Route::delete('/suppliers/{id}', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
+
+    //laporan keuangan
     Route::get('/pemasukan', [PemasukanController::class, 'index'])->name('laporan.pemasukan');
     Route::get('/pemasukan/pdf', [PemasukanController::class, 'generatePDF'])->name('laporan.pemasukan.pdf');
     Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('laporan.pengeluaran');

@@ -12,10 +12,10 @@
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Data Diri</span></a>
                 <ul class="dropdown-menu">
                     <li class=''>
-                        <a class="nav-link" href="/history">Riwayat Pesanan</a>
+                        <a class="nav-link" href="/history"><i class="fa-solid fa-bag-shopping"></i><span>Riwayat Pesanan</span></a>
                     </li>
                     <li class=" ">
-                        <a class="nav-link" href="/profile">Profile</a>
+                        <a class="nav-link" href="/profile"><i class="fa-regular fa-user"></i><span>Profile</span></a>
                     </li>
 
                 </ul>
@@ -32,7 +32,7 @@
             </li>
 
             <li class="{{ Request::is('bookings.create') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('bookings/create') }}"><i class="far fa-square"></i>
+                <a class="nav-link" href="{{ url('bookings/create') }}"><i class="fa-solid fa-suitcase-medical"></i>
                     <span>Layanan</span></a>
             </li>
 

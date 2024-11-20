@@ -66,8 +66,15 @@
                                 <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" class="form-control" value="{{ old('tanggal_pembelian') }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="supplier">Supplier</label>
-                                <input type="text" name="supplier" id="supplier" class="form-control" value="{{ old('supplier') }}" required>
+                                <label for="id_supplier">Pilih Supplier</label>
+                                <select name="id_supplier" id="id_supplier" class="form-control select2" required>
+                                    <option value="">-- Pilih Supplier --</option>
+                                    @foreach ($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}" {{ old('id_supplier') == $supplier->id ? 'selected' : '' }}>
+                                            {{ $supplier->nama_supplier }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                             <a href="{{ route('restocks.index') }}" class="btn btn-secondary">Batal</a>
