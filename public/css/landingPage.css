@@ -1,0 +1,339 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
+:root {
+    --primary: #d663aa;
+    --primary-dark: #b6448a;
+    --black: #000;
+    --gray-1: #788190;
+    --gray-2: #d3d4db;
+    --white: #ffffff;
+    --body: #fefefe;
+}
+
+body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-color: var(--body);
+}
+
+.btn {
+    border-radius: 8px;
+}
+
+.btn-primary,
+.btn-outline-violet {
+    padding: 12px 20px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn-outline-violet {
+    border: 1px solid;
+    color: var(--body);
+}
+
+.btn-outline-violet:hover {
+    background-color: var(--primary-dark) !important;
+    border: 1px solid var(--primary);
+    color: var(--body) !important;
+}
+
+.navbar .btn-outline-violet {
+    border: 1px solid var(--primary-dark);
+    color: var(--primary-dark);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 10px 16px;
+}
+
+.nav-link {
+    margin-left: 41px;
+    font-size: 16px;
+    color: var(--gray-1);
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    color: var(--black);
+}
+
+section.hero {
+    padding: 210px 0;
+}
+
+section.hero .text {
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 73px;
+    color: rgb(9, 25, 66);
+}
+
+.buttons .btn {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 24px;
+}
+
+/* Hero Section */
+.hero {
+    padding: 10px 0; /* Padding atas dan bawah */
+}
+
+.hero .text {
+    padding-right: 20px;
+}
+
+.hero .text h1 {
+    font-size: 2rem;
+    margin-top: 0;
+    padding-top: 90px;
+}
+
+.hero .text p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 5px;
+    margin-bottom: 10px; /* Menambahkan jarak bawah */
+}
+
+/* Bagian Gambar */
+.img {
+    max-width: 100%;
+    height: auto;
+    margin-left: 20px;
+}
+
+.img img {
+    width: 100%;
+    height: 170px;
+    max-width: 400px; /* Maksimal lebar gambar */
+    object-fit: cover;
+    margin: 0 auto; /* Tengah pada layar kecil */
+}
+
+/* Responsif Tambahan untuk Mobile */
+@media (max-width: 768px) {
+    .img img {
+        padding: 10px;
+        margin-top: 30px; /* Jarak antara gambar dan teks */
+        max-width: 300px; /* Membatasi lebar gambar */
+        height: auto;
+    }
+
+    .hero .text {
+        padding-left: 10px;
+        margin-top: -140px;
+        margin-bottom: 5px; /* Menambahkan jarak di bawah teks */
+    }
+}
+
+/* Layanan Section */
+
+section.layanan {
+    padding: 100px 0;
+}
+
+section.layanan .text-header h3 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 48px;
+    color: var(--black);
+}
+
+section.layanan .text-header h3 {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--gray-1);
+    padding: 27px 0;
+}
+
+section.layanan .icons {
+    padding: 27px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+section.layanan .icons img,
+section.layanan .icons svg {
+    width: 50px; /* Atur lebar ikon */
+    height: 50px; /* Atur tinggi ikon */
+    object-fit: contain; /* Untuk memastikan proporsi ikon tetap terjaga */
+}
+
+section.layanan .icons img:hover,
+section.layanan .icons svg:hover {
+    transform: scale(1.1); /* Efek hover untuk ikon */
+    transition: transform 0.3s ease; /* Transisi halus pada efek hover */
+}
+
+section.layanan h5 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--black);
+    padding-bottom: 18px;
+}
+
+section.layanan .desc p {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 22px;
+    color: var(--gray-1);
+    max-width: 284;
+    margin: 0 auto;
+}
+
+/* produk */
+section.produk .text-center h3 {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--gray-1);
+    padding: 100px 0;
+    margin-top: 10px;
+}
+
+section.produk .text-produk {
+    padding: 20px 0;
+    padding: 50px;
+}
+
+section.produk h5 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 48px;
+    color: var(--black);
+}
+
+section.produk p {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 28px;
+    color: var(--gray-1);
+}
+
+section.produk .info-1 {
+    padding: 10px 0;
+}
+
+/* Gaya Umum untuk Bagian Produk */
+.produk {
+    padding: 60px 0;
+    background-color: var(--body);
+}
+
+.produk h3 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 40px;
+    font-weight: bold;
+    text-align: center; /* Menyelaraskan judul ke tengah */
+}
+
+.text-produk {
+    padding: 20px;
+    margin-bottom: 40px; /* Menambahkan jarak antar produk */
+}
+
+.text-produk h5 {
+    font-size: 1.2rem;
+    color: var(--body);
+    margin-bottom: 15px;
+}
+
+.text-produk p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Gaya untuk Gambar */
+.row img {
+    width: 45%; /* Memperkecil ukuran gambar */
+    height: auto;
+    transition: transform 0.5s;
+    display: block; /* Menghilangkan spasi di bawah gambar */
+    margin: 0 auto; /* Menyelaraskan gambar ke tengah */
+}
+
+.row img:hover {
+    transform: scale(1.2);
+}
+
+.row img {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .produk h3 {
+        font-size: 2rem;
+    }
+
+    .text-produk h5 {
+        font-size: 1.5rem;
+    }
+
+    .text-produk p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Gaya Umum untuk Footer */
+.footer {
+    background-color: #da83c7; /* Warna latar belakang footer */
+    color: #fff; /* Warna teks */
+    padding: 20px 0; /* Padding atas dan bawah */
+}
+
+.footer h5 {
+    font-size: 1.5rem; /* Ukuran font untuk judul */
+    margin-bottom: 20px; /* Jarak bawah judul */
+    color: var(--body); /* Warna judul */
+}
+
+.footer p {
+    font-size: 0.9rem; /* Ukuran font untuk paragraf */
+    line-height: 1.6; /* Jarak antar baris */
+}
+
+.footer ul {
+    list-style-type: none; /* Menghilangkan bullet point */
+    padding: 0; /* Menghilangkan padding */
+}
+
+.footer ul li {
+    margin-bottom: 10px; /* Jarak antar item */
+    cursor: pointer; /* Menunjukkan bahwa item dapat diklik */
+    transition: color 0.3s; /* Transisi warna saat hover */
+}
+
+.footer ul li:hover {
+    color: #007bff; /* Warna saat hover */
+}
+
+/* Gaya untuk Copyright */
+.footer .text-center {
+    margin-top: 10px; /* Jarak atas untuk copyright */
+    font-size: 0.8rem; /* Ukuran font untuk copyright */
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .footer h5 {
+        font-size: 1.3rem; /* Ukuran font untuk judul pada layar kecil */
+    }
+
+    .footer p {
+        font-size: 0.8rem; /* Ukuran font untuk paragraf pada layar kecil */
+    }
+}

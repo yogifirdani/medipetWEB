@@ -42,7 +42,17 @@
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->service_category }}</td>
                                         <td>{{ $category->pet_category }}</td>
-                                        <td>{{ $category->service_time }}</td>
+                                        <td>
+                                            @if($category->serviceTimes->isNotEmpty())
+                                                <ul>
+                                                    @foreach ($category->serviceTimes as $serviceTime)
+                                                        <li>{{ $serviceTime->service_time }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                <span>Tidak ada jam layanan</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $category->take_status }}</td>
                                         <td>{{ $category->price }}</td>
                                         <td>

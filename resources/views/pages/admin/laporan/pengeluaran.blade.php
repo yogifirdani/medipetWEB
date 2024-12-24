@@ -6,14 +6,14 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Data Pembelian</h1>
+            <h1>Data Pengeluaran</h1>
         </div>
 
         <div class="section-body">
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card mt-4">
                     <div class="card-header">
-                        <h4>Data Pembelian</h4>
+                        <h4>Data Pengeluaran</h4>
                     </div>
                     <div class="card-body">
                         <form method="GET" action="{{ route('laporan.pengeluaran') }}">
@@ -55,7 +55,6 @@
                                         <th>Nama Produk</th>
                                         <th>Jumlah</th>
                                         <th>Harga Satuan</th>
-                                        <th>Supplier</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -68,9 +67,8 @@
                                             <td>Restock</td>
                                             <td>{{ $restock->product->nama_produk }}</td>
                                             <td>{{ $restock->quantity }}</td>
-                                            <td>{{ $restock->harga_satuan }}</td>
-                                            <td>{{ $restock->supplier }}</td>
-                                            <td>{{ $restock->total_harga }}</td>
+                                            <td style="text-align: right;">{{ $restock->harga_satuan }}</td>
+                                            <td style="text-align: right;">{{ $restock->total_harga }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

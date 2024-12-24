@@ -35,7 +35,7 @@
                                     <h4>Total Pelanggan</h4>
                                 </div>
                                 <div class="card-body text-center mb-3">
-                                    {{App\Models\User::jmlCust()}}
+                                    {{ $totalUsers }}
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                     <h4>Total Produk</h4>
                                 </div>
                                 <div class="card-body text-center mb-3">
-                                    {{App\Models\Product::jmlProduk()}}
+                                    {{ $totalProducts }}
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                                     <h4>Total Layanan</h4>
                                 </div>
                                 <div class="card-body text-center mb-3">
-                                    {{-- {{App\Models\Category::jmLayanan()}} --}}
+                                    {{ $totalLayanan }}
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                     <h4>Total Pemesanan</h4>
                                 </div>
                                 <div class="card-body text-center mb-3">
-                                    {{-- {{App\Models\Manage_order::jmlPesanan()}} --}}
+                                    {{ $totalOrders }}
                                 </div>
                             </div>
                         </div>

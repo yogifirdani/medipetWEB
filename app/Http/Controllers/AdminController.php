@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
-use App\Models\manage_order;
+use App\Models\ManageOrder;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,9 +15,9 @@ class AdminController extends Controller
         $totalUsers = User::where('role_id', 2)->count();
         $totalProducts = Product::count();
         $totalLayanan = Booking::count();
-        // $totalOrders = Manage_order::count();
+        $totalOrders = ManageOrder::count();
 
         $user = Auth::user()->name;
-        return view('pages.admin.dashboard');
+        return view('pages.admin.dashboard', compact('totalUsers', 'totalProducts', 'totalOrders', 'totalLayanan',));
     }
 }

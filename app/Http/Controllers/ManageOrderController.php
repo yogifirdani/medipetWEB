@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkout;
+use App\Models\DetailOrder;
 use App\Models\ManageOrder;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Symfony\Contracts\Service\Attribute\Required;
 
 class ManageOrderController extends Controller
 {
     public function index(Request $request)
     {
+        $user = auth()->user();
         $month = $request->input('month');
         $year = $request->input('year');
-        $category = $request->input('category');
+        $kategori = $request->input('kategori');
 
-        $query = ManageOrder::with(['user', 'product', 'co']);
+        $query = ManageOrder::with(['user', 'co', 'detail.product']);
 
         if ($month) {
             $query->whereMonth('created_at', $month);
@@ -28,15 +29,16 @@ class ManageOrderController extends Controller
             $query->whereYear('created_at', $year);
         }
 
-        if ($category && $category !== 'Semua') {
-            $query->whereHas('product', function ($q) use ($category) {
-                $q->where('category', $category);
+        if ($kategori && $kategori !== 'Semua') {
+            $query->whereHas('product', function ($q) use ($kategori) {
+                $q->where('kategori', $kategori);
             });
         }
 
         $orders = $query->get();
+        $groupedOrders = $orders->groupBy('id_orders');
 
-        return view('pages.admin.manage_order.index', compact('orders'));
+        return view('pages.admin.manage_order.index', compact('groupedOrders'));
     }
 
     /**
@@ -54,58 +56,72 @@ class ManageOrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_product' => 'required|exists:product,id',
-            'jumlah_pembelian' => 'required|integer|min:1',
+            'nama' => 'required|string',
+            'telepon' => 'required|string|min:11|max:13|regex:/^[0-9]+$/',
+            'id_product.*' => 'required|exists:product,id',
+            'jumlah_pembelian.*' => 'required|integer|min:1',
             'atm' => 'required|string',
+            'no_rekening' => 'nullable|min:9|max:15',
         ], [
-            'id_product.required' => 'Pilih product terlebih dahulu',
+            'id_product.required' => 'Pilih produk terlebih dahulu',
             'jumlah_pembelian.required' => 'Jumlah pembelian wajib diisi',
             'jumlah_pembelian.min' => 'Jumlah produk minimal 1',
             'atm.required' => 'Metode pembayaran harus tercantum',
         ]);
 
-        $product = Product::findOrFail($request->id_product);
-
-        if ($product->stok < $request->jumlah_pembelian) {
-            return redirect()->back()->with('error', 'Stok produk tidak mencukupi.');
-        }
-
-        $totalHarga = $product->harga * $request->jumlah_pembelian;
-
-
         DB::beginTransaction();
+
         try {
-            $manage_Order = ManageOrder::create([
-                'id_product' => $request->id_product,
-                'jumlah_pembelian' => $request->jumlah_pembelian,
-                'total_harga' => $totalHarga,
+            $order = ManageOrder::create([
+                'id_cust' => null,
+                'nama' => $request->input('nama'),
+                'telepon' => $request->input('telepon'),
                 'status_pesanan' => 'lunas',
             ]);
 
+            $totalHarga = 0;
 
-            if (!$manage_Order->id_orders) {
-                throw new \Exception('ID pesanan gagal disimpan.');
+            foreach ($request->input('id_product') as $key => $productId) {
+                $product = Product::find($productId);
+                $jumlah = $request->input('jumlah_pembelian')[$key];
+                $harga = $product->harga;
+
+                if ($product->stok >= $jumlah) {
+                    $product->stok -= $jumlah;
+                    $product->save();
+
+                    DetailOrder::create([
+                        'id_orders' => $order->id_orders,
+                        'id_product' => $productId,
+                        'jumlah_pembelian' => $jumlah,
+                        'harga' => $harga,
+                    ]);
+
+                    $totalHarga += $jumlah * $harga;
+                } else {
+                    DB::rollBack();
+                    return redirect()->back()->with('error', 'Stok produk tidak cukup untuk pesanan.');
+                }
             }
 
-
             Checkout::create([
-                'id_orders' => $manage_Order->id_orders,
-            'id_cust' => null,
-            'atm' => $request->atm,
-            'check_in_date' => now(),
+                'id_orders' => $order->id_orders,
+                'atm' => $request->input('atm'),
+                'no_rekening' => $request->input('no_rekening'),
+                'check_in_date' => now(),
             ]);
 
-
             DB::commit();
+
             return redirect()->route('transaksi.index')->with('success', 'Order berhasil dibuat dan stok produk telah diperbarui.');
         } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan pesanan: ' . $e->getMessage());
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan, silakan coba lagi.');
         }
     }
 
     /**
-     * Display the specified resource.k
+     * Display the specified resource.
      */
     public function show(ManageOrder $ManageOrder)
     {

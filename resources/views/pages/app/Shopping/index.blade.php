@@ -40,13 +40,14 @@
                                                         {{ $details['nama_produk'] }}</p>
                                                     <p data-th="harga">Rp.{{ $details['harga'] }}</p>
                                                 </div>
+                                            </div>
                                         <th>
                                             <div class="col-md-3 col-lg-6 col-xl d-flex">
                                                 <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
                                                     onclick="updateQuantity(this, -1, {{ $details['harga'] }}, {{ $id }})">
                                                     <i class="fas fa-minus"></i>
                                                 </button>
-                                                <input id="quantity-{{ $id }}" min="1" name="quantity"
+                                                <input id="quantity-{{ $id }}" readonly min="1" name="quantity"
                                                     value="{{ $details['quantity'] }}" type="number"
                                                     class="form-control form-control-sm" onchange="updateTotalPrice()" />
                                                 <button data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2"
@@ -55,98 +56,108 @@
                                                 </button>
                                             </div>
                                         </th>
+                                        <th class="action">
+                                            <form action="{{ route('cart.remove', $id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger btn-sm"><i
+                                                        class="fa fa-trash"></i></button>
+                                            </form>
+                                        </th>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </table>
                     </div>
-                    </th>
-                    <th class="action">
-                        <form action="{{ route('cart.remove', $id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger btn-sm"><i
-                                    class="fa fa-trash"></i></button>
-                        </form>
-                    </th>
-                    </tr>
-                    @endforeach
-                    @endif
-                    </table>
                 </div>
             </div>
-    </div>
-    <div class="card mb-5">
-        <div class="card-body p-4">
-            <div class="float-end">
-                <p class="mb-0 me-5 d-flex justify-content-end align-items-center">
-                    <span class="text-muted fw-normal mb-2 px-4" style="font-size: 115%">Total: </span>
-                    <span class="fw-normal mb-2 px-2" id="totalPrice" style="font-size: 110%">Rp. 0</span>
-                </p>
+            <div class="card mb-5">
+                <div class="card-body p-4">
+                    <div class="float-end">
+                        <p class="mb-0 me-5 d-flex justify-content-end align-items-center">
+                            <span class="text-muted fw-normal mb-2 px-4" style="font-size: 115%">Total: </span>
+                            <span class="fw-normal mb-2 px-2" id="totalPrice" style="font-size: 110%">Rp. 0</span>
+                        </p>
+                    </div>
+                    <div class="mt-3 d-flex justify-content-end">
+                        <form action="{{ route('co') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="selected_items" id="selectedItems">
+                            <button type="submit" class="btn btn-primary btn-lg me-2">Pesan</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="mt-3 d-flex justify-content-end">
-                <form action="{{ route('co') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="selected_items" id="selectedItems">
-                    <button type="submit" class="btn btn-primary btn-lg me-2">Pesan</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    </section>
+        </section>
     </div>
 @endsection
 
 @push('scripts')
-    <!-- JS Libraries -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const checkboxes = document.querySelectorAll('.item-checkbox');
-            const totalPriceElement = document.getElementById('totalPrice');
+    const checkboxes = document.querySelectorAll('.item-checkbox');
+    const totalPriceElement = document.getElementById('totalPrice');
+    const checkoutForm = document.querySelector('form[action="{{ route('co') }}"]');
 
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', updateTotalPrice);
-            });
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateTotalPrice);
+    });
 
-            function updateTotalPrice() {
-                let total = 0;
-                checkboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        const itemId = checkbox.value;
-                        const itemQuantity = document.getElementById(`quantity-${itemId}`).value;
-                        const itemPrice = parseFloat(checkbox.getAttribute('data-price')) / itemQuantity;
-                        total += itemPrice * itemQuantity;
-                    }
-                });
-                totalPriceElement.textContent = 'Rp. ' + total.toLocaleString('id-ID');
+    function updateTotalPrice() {
+        let total = 0;
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                const itemId = checkbox.value;
+                const itemQuantity = document.getElementById(`quantity-${itemId}`).value;
+                const itemPrice = parseFloat(checkbox.getAttribute('data-price')) / itemQuantity;
+
+                console.log(`Item ID: ${itemId}, Quantity: ${itemQuantity}, Item Price: ${itemPrice}`);
+
+                total += itemPrice * itemQuantity;
             }
-
-            window.updateQuantity = function(element, delta, itemPrice, itemId) {
-                const quantityInput = document.getElementById(`quantity-${itemId}`);
-                let quantity = parseInt(quantityInput.value);
-                quantity = Math.max(1, quantity + delta);
-                quantityInput.value = quantity;
-
-                const checkbox = document.querySelector(`input[name="selected_items[]"][value="${itemId}"]`);
-                checkbox.setAttribute('data-price', itemPrice * quantity);
-
-                updateTotalPrice();
-            }
-
-            const orderForm = document.querySelector('form[action="{{ route('pemesanan') }}"]');
-            orderForm.addEventListener('submit', function(e) {
-                const selectedItems = [];
-                checkboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        const itemId = checkbox.value;
-                        const itemQuantity = document.getElementById(`quantity-${itemId}`).value;
-                        selectedItems.push({
-                            id: itemId,
-                            quantity: itemQuantity
-                        });
-                    }
-                });
-                console.log('Selected Items:', selectedItems); // Tambahkan ini untuk debugging
-                document.getElementById('selectedItems').value = JSON.stringify(selectedItems);
-            });
-
-
         });
+
+        totalPriceElement.textContent = 'Rp. ' + total.toLocaleString('id-ID');
+    }
+
+    window.updateQuantity = function(element, delta, itemPrice, itemId) {
+        const quantityInput = document.getElementById(`quantity-${itemId}`);
+
+        let quantity = parseInt(quantityInput.value) || 1;
+        quantity += delta;
+        quantity = Math.max(1, quantity);
+        quantityInput.value = quantity;
+
+        const checkbox = document.querySelector(`input[name="selected_items[]"][value="${itemId}"]`);
+        checkbox.setAttribute('data-price', itemPrice * quantity);
+
+        updateTotalPrice();
+    };
+
+    checkoutForm.addEventListener('submit', function(e) {
+        const selectedItems = [];
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                const itemId = checkbox.value;
+                const itemQuantity = document.getElementById(`quantity-${itemId}`).value;
+                selectedItems.push({
+                    id: itemId,
+                    quantity: itemQuantity
+                });
+            }
+        });
+
+        if (selectedItems.length === 0) {
+            e.preventDefault();
+            alert('Silakan pilih minimal satu item untuk dipesan.');
+            return;
+        }
+
+        console.log('Selected Items:', selectedItems);
+
+        document.getElementById('selectedItems').value = JSON.stringify(selectedItems);
+    });
+});
+
     </script>
 @endpush

@@ -12,7 +12,6 @@ class Category extends Model
     protected $fillable = [
         'pet_category',
         'service_category',
-        'service_time',
         'take_status',
         'price'
     ];
@@ -24,6 +23,11 @@ class Category extends Model
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'service_type');
+    }
+
+    public function serviceTimes()
+    {
+        return $this->hasMany(ServiceTime::class);
     }
 
     public static function jmlLayanan()
