@@ -28,7 +28,7 @@ class ProfileController extends Controller
         // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:20|regex:/^[0-9+\-\s]*$/',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'address' => 'nullable|string|max:255',
         ]);
