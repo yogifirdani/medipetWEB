@@ -66,16 +66,13 @@ class BookingController extends Controller
 
         // Tentukan nilai default untuk $take_date
         $take_date = $request->take_date ? $request->take_date : $request->booking_date;
-
-        // Ambil harga layanan berdasarkan kategori
         $category = Category::findOrFail($request->service_type);
         $pricePerDay = $category->price;
 
-        // Hitung total harga berdasarkan tanggal
         $startDate = new \DateTime($request->booking_date);
-        $endDate = new \DateTime($take_date);
-        $daysDifference = ceil(($endDate->getTimestamp() - $startDate->getTimestamp()) / (60 * 60 * 24));
-        $daysDifference = max(1, $daysDifference); // Minimal 1 hari
+        $endDate = $take_date ? new \DateTime($take_date) : clone $startDate;
+        $daysDifference = ($endDate->getTimestamp() - $startDate->getTimestamp()) / (60 * 60 * 24) + 1; // Tambahkan +1 untuk minimal 1 hari
+        $daysDifference = $daysDifference > 0 ? $daysDifference : 0;
         $totalPrice = $pricePerDay * $daysDifference;
 
         // Simpan data ke database

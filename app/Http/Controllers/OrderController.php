@@ -63,14 +63,15 @@ class OrderController extends Controller
         ]);
 
         // Ambil harga layanan berdasarkan kategori
+        $take_date = $request->take_date ? $request->take_date : $request->booking_date;
         $category = Category::findOrFail($request->service_type);
         $pricePerDay = $category->price;
 
         // Hitung total harga berdasarkan tanggal
         $startDate = new \DateTime($request->booking_date);
-        $endDate = $request->take_date ? new \DateTime($request->take_date) : $startDate;
-        $daysDifference = ceil(($endDate->getTimestamp() - $startDate->getTimestamp()) / (60 * 60 * 24));
-        $daysDifference = max(1, $daysDifference);
+        $endDate = $take_date ? new \DateTime($take_date) : clone $startDate;
+        $daysDifference = ($endDate->getTimestamp() - $startDate->getTimestamp()) / (60 * 60 * 24) + 1; // Tambahkan +1 untuk minimal 1 hari
+        $daysDifference = $daysDifference > 0 ? $daysDifference : 0;
         $totalPrice = $pricePerDay * $daysDifference;
 
         $data = $request->all();
