@@ -17,7 +17,7 @@
             <div class="section-body">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Form Restock</h4>
+                        <h4>Form Pembelian</h4>
                     </div>
                     <div class="card-body">
                         @if ($errors->any())
@@ -64,6 +64,17 @@
                             <div class="form-group">
                                 <label for="tanggal_pembelian">Tanggal Pembelian</label>
                                 <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" class="form-control" value="{{ old('tanggal_pembelian') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_supplier">Pilih Supplier</label>
+                                <select name="id_supplier" id="id_supplier" class="form-control select2" required>
+                                    <option value="">-- Pilih Supplier --</option>
+                                    @foreach ($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}" {{ old('id_supplier') == $supplier->id ? 'selected' : '' }}>
+                                            {{ $supplier->nama_supplier }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                             <a href="{{ route('restocks.index') }}" class="btn btn-secondary">Batal</a>

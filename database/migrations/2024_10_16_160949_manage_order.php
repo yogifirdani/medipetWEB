@@ -13,17 +13,13 @@ return new class extends Migration
     {
         Schema::create('manage_order', function (Blueprint $table) {
             $table->bigIncrements('id_orders');
-            $table->unsignedBigInteger('id_cust');
-            $table->unsignedBigInteger('id_product');
-            $table->integer('jumlah_pembelian');
-            $table->integer('total_harga');
-            // $table->string('atm');
-            // $table->bigInteger('no_rekening')->nullable();
-            $table->enum('status_pesanan', ['ditolak', 'proses', 'dikirim', 'lunas'])->default('proses');
+            $table->unsignedBigInteger('id_cust')->nullable();
+            $table->string('nama')->nullable();
+            $table->string('telepon')->nullable();
+            $table->enum('status_pesanan', ['ditolak', 'proses', 'lunas'])->default('proses');
             $table->timestamps();
 
             $table->foreign('id_cust')->references('id')->on('users');
-            $table->foreign('id_product')->references('id')->on('product');
         });
     }
 

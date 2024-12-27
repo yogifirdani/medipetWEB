@@ -43,9 +43,9 @@
                             <div class="form-group">
                                 <label for="service_time">Jam Layanan</label>
                                 <div id="service-time">
-                                    @forelse ($category->service_time as $time)
+                                    @forelse ($category->serviceTimes as $serviceTime)
                                         <div class="input-group mb-2">
-                                            <input type="time" class="form-control" name="service_time[]" value="{{ $time }}">
+                                            <input type="time" class="form-control" name="service_time[]" value="{{ $serviceTime->service_time }}">
                                             <button type="button" class="btn btn-danger btn-remove-time">Hapus</button>
                                         </div>
                                     @empty
@@ -55,7 +55,7 @@
                                         </div>
                                     @endforelse
                                 </div>
-                                <button type="button" class="btn btn-success" id="add-time">Tambah Jam</button>
+                                <button type="button" class="btn btn-success mt-2" id="add-time">Tambah Jam</button>
                             </div>
                             <div class="form-group">
                                 <label for="take_status">Layanan Satu Hari</label>
@@ -69,13 +69,18 @@
                                 <label for="price">Harga</label>
                                 <input type="number" class="form-control" id="price" name="price" value="{{ $category->price }}" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ route('categories.index') }}" class="btn btn-secondary">Kembali</a>
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="button" class="btn btn-danger ml-2" onclick="confirmDeletion()">Hapus</button>
+                                </div>
+                            </div>
                         </form>
                         <!-- Delete Form -->
-                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" id="delete-form" class="mt-3">
+                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" id="delete-form" class="d-none">
                         @csrf
                         @method('DELETE')
-                            <button type="button" class="btn btn-danger" onclick="confirmDeletion()">Hapus</button>
                         </form>
                     </div>
                 </div>
@@ -101,7 +106,7 @@
         });
     });
     function confirmDeletion() {
-        if (confirm('Are you sure you want to delete this category?')) {
+        if (confirm('Apakah Anda yakin ingin menghapus kategori ini?')) {
             document.getElementById('delete-form').submit();
         }
     }

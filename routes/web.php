@@ -13,11 +13,15 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HistoryPesanan;
 use App\Http\Controllers\ManageOrderController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PemasukanController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\RestockController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ViewOrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,8 +44,13 @@ use function PHPSTORM_META\type;
 
 //  jika user belum login
 Route::group(['middleware' => 'guest'], function () {
+<<<<<<< HEAD
     Route::get('/', [AuthController::class, 'login'])->name('login');
     Route::post('/', [AuthController::class, 'dologin'])->name('login');
+=======
+    Route::get('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'dologin']);
+>>>>>>> d09a30915e62852e7366215391d69973fd2286f0
 
     //regist customer
     Route::get('register', [AuthController::class, 'register'])->name('register');
@@ -84,7 +93,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::get('/transaksi/{id}', [ManageOrderController::class, 'show'])->name('transaksi.show');
     Route::post('/transaksi', [ManageOrderController::class, 'store'])->name('transaksi.store');
     Route::post('/transaksi/{id}', [ManageOrderController::class, 'update'])->name('transaksi.update');
-    Route::delete('/transaksi/{id}', [ManageOrderController::class,'destroy'])->name('transaksi.destrpy');
+    Route::delete('/transaksi/{id}', [ManageOrderController::class, 'destroy'])->name('transaksi.destrpy');
 
     Route::get('/get-product-price/{id}', [ManageOrderController::class, 'getProductPrice']);
 
@@ -96,6 +105,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
     Route::post('/orders/{id}/process', [OrderController::class, 'processOrder'])->name('orders.process');
     Route::post('/orders/{id}/complete', [OrderController::class, 'completeOrder'])->name('orders.complete');
+    Route::get('/orders/{id}/invoice', [OrderController::class, 'generateInvoice'])->name('orders.invoice');
 
     //kategori
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
@@ -104,6 +114,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/categories/{id}/service-time', [BookingController::class, 'getServiceTime'])->name('categories.service-time');
 
     //restock
     // Route::get('/restocks', [RestockController::class, 'index'])->name('restocks.index');
@@ -115,9 +126,27 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function () {
     Route::resource('restocks', RestockController::class);
     // Route::delete('/restocks/{id_restock}', [RestockController::class, 'destroy'])->name('restocks.destroy');
 
+    //supplier
+    Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
+    Route::post('/suppliers', [SupplierController::class, 'store'])->name('suppliers.store');
+    Route::get('/suppliers/create', [SupplierController::class, 'create'])->name('suppliers.create');
+    Route::get('/suppliers/{id}/edit', [SupplierController::class, 'edit'])->name('suppliers.edit');
+    Route::put('/suppliers/{id}', [SupplierController::class, 'update'])->name('suppliers.update');
+    Route::delete('/suppliers/{id}', [SupplierController::class, 'destroy'])->name('suppliers.destroy');
+
+    //laporan keuangan
+    Route::get('/pemasukan', [PemasukanController::class, 'index'])->name('laporan.pemasukan');
+    Route::get('/pemasukan/pdf', [PemasukanController::class, 'generatePDF'])->name('laporan.pemasukan.pdf');
+    Route::get('/pengeluaran', [PengeluaranController::class, 'index'])->name('laporan.pengeluaran');
+    Route::get('/pengeluaran/pdf', [PengeluaranController::class, 'generatePDF'])->name('laporan.pengeluaran.pdf');
 });
 
 // untuk customer
+
+Route::get('/', function () {
+    return view('pages.app.view.landingPage');
+});
+
 Route::group(['middleware' => ['auth', 'checkrole:2']], function () {
     Route::get('/customer', [DashboardController::class, 'index'])->name('dashboard.index');
 
@@ -141,20 +170,25 @@ Route::group(['middleware' => ['auth', 'checkrole:2']], function () {
     Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
     Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::get('/print-receipt/{id}', [BookingController::class, 'printReceipt'])->name('print.receipt');
+    Route::get('/bookings/service-time/{id}', [BookingController::class, 'getServiceTime']);
+    Route::get('/getServiceTime/{id}', [BookingController::class, 'getServiceTime']);
 
     // keranjang + co
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::get('/cart/add/{id}', [CartController::class, 'addtocart'])->name('cart.addtocart');
-    Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
     Route::post('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{id}', [CartController::class, 'removeitem'])->name('cart.remove');
-    // Route::post('/beli/{id}', [CartController::class, 'cart'])->name('checkout');
-    Route::post('/pemesanan', [CartController::class, 'checkout'])->name('pemesanan');
-    Route::post('/pembelian', [CartController::class, 'pembelian'])->name('pembelian');
+    Route::post('/pemesanan/co', [CartController::class, 'co'])->name('co');
+    Route::post('/pemesanan/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::get('/pesanan/success', [CartController::class, 'success'])->name('success');
 
     // view order
     Route::get('/view', [ViewOrderController::class, 'show'])->name('view');
 
     //history
-    Route::get('/history', [HistoryController::class, 'show'])->name('history');});
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
+    Route::get('/history/{id}', [HistoryController::class, 'nota'])->name('invoice');
+    Route::get('/history/receipt/{id}', [HistoryController::class, 'printReceipt'])->name('print');
+    Route::get('/history/kwitansi/{id}', [HistoryController::class, 'kwitansi'])->name('kwitansi');
+});

@@ -26,7 +26,7 @@ class CreateBookingsTable extends Migration
             $table->time('start_time');
             $table->integer('total_price');
             $table->text('notes')->nullable();
-            $table->boolean('status')->default(false);
+            $table->string('status')->default("Menunggu diproses");
             $table->timestamps();
         });
     }

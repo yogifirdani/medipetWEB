@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('restocks', function (Blueprint $table) {
             $table->bigIncrements('id_restock');
-            $table->unsignedBigInteger('id_product'); // Foreign key untuk produk
+            $table->unsignedBigInteger('id_product');
+            $table->unsignedBigInteger('id_supplier');
             $table->integer('quantity');
             $table->integer('harga_satuan');
             $table->integer('total_harga');
             $table->date('tanggal_pembelian');
             $table->timestamps();
 
-        $table->foreign('id_product')->references('id')->on('product')->onDelete('cascade');
+
+            $table->foreign('id_product')->references('id')->on('product')->onDelete('cascade');
+            $table->foreign('id_supplier')->references('id')->on('suppliers')->onDelete('cascade');
         });
     }
 

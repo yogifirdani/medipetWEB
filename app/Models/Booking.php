@@ -19,6 +19,7 @@ class Booking extends Model
         'start_time',
         'total_price',
         'notes',
+        'user_id',
         'category_id'
     ];
 

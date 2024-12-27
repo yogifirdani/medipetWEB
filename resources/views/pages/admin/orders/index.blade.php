@@ -17,9 +17,6 @@
                     </div>
                 @endif
 
-                <a href="{{ url('/categories') }}" class="btn btn-primary mt-5">
-                    <h5>Kelola Kategori</h5>
-                </a>
                 <a href="{{ route('orders.create') }}" class="btn btn-primary mt-5">
                     <h5>Tambah Pesanan</h5>
                 </a>
@@ -66,7 +63,10 @@
                                             <td>{{ $order->total_price }}</td>
                                             <td>{{ $order->status ?? 'Menunggu diproses' }}</td>
                                             <td>
-                                                <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning">Edit</a>
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    <a href="{{ route('orders.invoice', $order->id) }}" class="btn btn-info btn-sm">Print</a>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\checkout;
-use App\Models\manage_order;
+use App\Models\Checkout;
+use App\Models\DetailOrder;
 use App\Models\ManageOrder;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -22,12 +23,12 @@ class CartController extends Controller
         return view('pages.app.Shopping.index', compact('cart', 'totalPrice'));
     }
 
-    public function show()
-    {
-        $cart = session()->get('cart', []);
+    // public function show()
+    // {
+    //     $cart = session()->get('cart', []);
 
-        return view('pages.app.Shopping.index', compact('cart'));
-    }
+    //     return view('pages.app.Shopping.index', compact('cart'));
+    // }
 
     public function addtocart(Request $request, $id)
     {
@@ -41,13 +42,14 @@ class CartController extends Controller
                 $cart[$id] = [
                     'id' => $product->id,
                     'image' => $product->image,
-                    'nama' => $product->nama,
+                    'nama_produk' => $product->nama_produk,
                     'harga' => $product->harga,
                     'quantity' => 1,
                 ];
             }
 
             session()->put('cart', $cart);
+
             return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke keranjang.');
         } catch (\Exception $e) {
             return back()->withError($e->getMessage())->withInput();
@@ -79,53 +81,13 @@ class CartController extends Controller
                 unset($cart[$id]);
                 session()->put('cart', $cart);
             }
+            return redirect()->back()->with('success', 'Produk berhasil dihapus dari keranjang.');
+
         } catch (\Exception $e) {
             return back()->withError($e->getMessage())->withInput();
         }
 
-        return view('pages.app.Shopping.index');
-    }
-
-    public function checkout(Request $request)
-    {
-        try {
-            $selectedItems = json_decode($request->input('selected_items', '[]'), true);
-            $cart = session()->get('cart', []);
-
-            // Filter dan hitung total harga dari item yang dipilih
-            $selectedCart = array_filter($cart, function ($key) use ($selectedItems) {
-                return in_array($key, array_column($selectedItems, 'id'));
-            }, ARRAY_FILTER_USE_KEY);
-
-            foreach ($selectedItems as $item) {
-                if (isset($selectedCart[$item['id']])) {
-                    $selectedCart[$item['id']]['quantity'] = $item['quantity'];
-                }
-            }
-
-            $totalPrice = $this->TotalPrice($selectedCart);
-
-            foreach ($selectedItems as $item) {
-                $order = new ManageOrder();
-                $order->id_cust = Auth::user()->id;
-                $order->id_product = $item['id'];
-                $order->jumlah_pembelian = $item['quantity'];
-                $order->total_harga = $totalPrice;
-                $order->status_pesanan = 'proses';
-                $order->save();
-            }
-
-            // $co= new Checkout();
-            // $co->atm = $request->atm;
-            // $co->no_rekening = $request->no_rekening;
-            // $co->save();
-
-            // dd($order);
-
-            return view('pages.app.Shopping.co', compact('selectedCart', 'totalPrice'));
-        } catch (\Exception $e) {
-            return back()->withError($e->getMessage())->withInput();
-        }
+        // return view('pages.app.Shopping.index');
     }
 
     private function TotalPrice($cart)
@@ -137,43 +99,93 @@ class CartController extends Controller
         return $totalPrice;
     }
 
-    public function pembelian(Request $request)
+    public function co(Request $request)
     {
-        $request->validate([
-            'atm' => 'required',
-            'no_rekening' => 'required'
-        ]);
-
+        $selectedItems = json_decode($request->input('selected_items', '[]'), true);
+        session()->put('selected_items', $selectedItems);
         $cart = session()->get('cart', []);
-        $orders = json_decode($request->orders, true);
 
-        // dd($request->all());
+        $selectedCart = array_filter($cart, function ($key) use ($selectedItems) {
+            return in_array($key, array_column($selectedItems, 'id'));
+        }, ARRAY_FILTER_USE_KEY);
 
-        foreach ($orders as $order) {
+        foreach ($selectedItems as $item) {
+            if (isset($selectedCart[$item['id']])) {
+                $selectedCart[$item['id']]['quantity'] = $item['quantity'];
+            }
+        }
+
+        $totalPrice = $this->TotalPrice($selectedCart);
+
+        return view('pages.app.Shopping.co', compact('selectedCart', 'totalPrice'));
+    }
+
+    public function checkout(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $selectedItems = json_decode($request->input('orders', '[]'), true);
+            $cart = session()->get('cart', []);
+
+            $selectedCart = array_filter($cart, function ($key) use ($selectedItems) {
+                return in_array($key, array_column($selectedItems, 'id'));
+            }, ARRAY_FILTER_USE_KEY);
+
+            foreach ($selectedItems as $item) {
+                if (isset($selectedCart[$item['id']])) {
+                    $selectedCart[$item['id']]['quantity'] = $item['quantity'];
+                }
+            }
+
+            $manageOrder = ManageOrder::create([
+                'id_cust' => Auth::user()->id,
+                'nama' => Auth::user()->name,
+                'telepon' => Auth::user()->phone,
+                'status_pesanan' => 'proses',
+            ]);
+
+            foreach ($selectedCart as $item) {
+                DetailOrder::create([
+                    'id_orders' => $manageOrder->id_orders,
+                    'id_product' => $item['id'],
+                    'jumlah_pembelian' => $item['quantity'],
+                    'harga' => $item['harga'],
+                ]);
+            }
+
             Checkout::create([
-                'id_orders' => $order['id'],
+                'id_orders' => $manageOrder->id_orders,
                 'id_cust' => Auth::user()->id,
                 'atm' => $request->atm,
                 'no_rekening' => $request->no_rekening,
-                'check_in_date' => Carbon::now()
+                'check_in_date' => Carbon::now(),
             ]);
 
-            $products = Product::find($order['id']);
-            if ($products) {
-                $products->stok -= $order['quantity'];
-                $products->save();
+            foreach ($selectedCart as $item) {
+                $product = Product::find($item['id']);
+                if ($product && $product->stok >= $item['quantity']) {
+                    $product->stok -= $item['quantity'];
+                    $product->save();
+                } else {
+                    throw new \Exception("Stok tidak mencukupi untuk produk: {$product->nama_produk}");
+                }
             }
 
-            if (isset($cart[$order['id']])) {
-                unset($cart[$order['id']]);
-            }
+            session()->forget(['cart', 'selected_items']);
+
+            DB::commit();
+
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
-        session()->put('cart', $cart);
-        return view('pages.app.Shopping.success');
     }
 
     public function success()
     {
         return view('pages.app.Shopping.success');
     }
+
 }

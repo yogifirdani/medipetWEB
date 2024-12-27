@@ -28,6 +28,7 @@ class ProfileController extends Controller
         // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
+<<<<<<< HEAD
             'phone' => 'required|nullable|string|min:11|max:20',
             'email' => 'required|string|email|min:5|max:30|regex:/^[\w\.-]+@[\w\.-]+\.\w+$/|unique:users,email,' . $user->id,
             'address' => 'required|nullable|string|max:255',
@@ -43,6 +44,11 @@ class ProfileController extends Controller
             'email.regex' => 'Email tidak valid',
             'email.unique' => 'Email sudah terdaftar. Silakan gunakan email lain.',
             'address.required' => 'alamat rumah tidak boleh kosong',
+=======
+            'phone' => 'nullable|string|max:20|regex:/^[0-9+\-\s]*$/',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'address' => 'nullable|string|max:255',
+>>>>>>> d09a30915e62852e7366215391d69973fd2286f0
         ]);
 
         // Update data user

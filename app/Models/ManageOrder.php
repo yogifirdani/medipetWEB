@@ -16,9 +16,8 @@ class ManageOrder extends Model
         'id_cust',
         'id_product',
         'jumlah_pembelian',
-        'total_harga',
-        // 'atm',
-        // 'no_rekening',
+        'nama',
+        'telepon',
         'status_pesanan',
     ];
 
@@ -29,11 +28,18 @@ class ManageOrder extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'id_product');
+        return $this->belongsTo(Product::class, 'id_product', 'id');
     }
+
 
     public function co()
     {
-        return $this->HasOne(Checkout::class, 'id_orders', 'id_orders');
+        return $this->hasOne(Checkout::class, 'id_orders', 'id_orders');
     }
+
+    public function detail()
+    {
+        return $this->hasMany(DetailOrder::class, 'id_orders', 'id_orders');
+    }
+
 }

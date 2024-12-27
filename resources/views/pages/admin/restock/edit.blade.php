@@ -14,7 +14,7 @@
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Components</a></div>
-                    <div class="breadcrumb-item">Edit Restock</div>
+                    <div class="breadcrumb-item">Edit Pembelian</div>
                 </div>
             </div>
 
@@ -68,6 +68,11 @@
                                 <label for="tanggal_pembelian">Tanggal Pembelian</label>
                                 <input type="date" name="tanggal_pembelian" id="tanggal_pembelian" class="form-control"
                                     value="{{ old('tanggal_pembelian', $restock->tanggal_pembelian) }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier">Supplier</label>
+                                <input name="total_harga" id="supplier" class="form-control"
+                                    value="{{ old('supplier', $restock->supplier) }}" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Perbarui</button>
                             <a href="{{ route('restocks.index') }}" class="btn btn-secondary">Batal</a>

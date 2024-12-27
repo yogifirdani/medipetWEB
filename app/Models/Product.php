@@ -42,6 +42,10 @@ class Product extends Model
          $this->save();
      }
 
+     public function detail()//tambahan
+     {
+        return $this->hasMany(DetailOrder::class, 'id_product');
+     }
     // public static function jmlStok($category)
     // {
     //     return self::where('category', $category)->sum('stok');

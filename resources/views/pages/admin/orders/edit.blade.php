@@ -1,4 +1,4 @@
-@extends('layouts.app-cust')
+@extends('layouts.app')
 
 @section('title', 'Service Booking')
 

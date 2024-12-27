@@ -27,4 +27,9 @@ class Checkout extends Model
     {
         return $this->belongsTo(ManageOrder::class, 'id_orders');
     }
+
+    public function detailOrder()
+    {
+        return $this->belongsTo(DetailOrder::class, 'id_orders');
+    }
 }

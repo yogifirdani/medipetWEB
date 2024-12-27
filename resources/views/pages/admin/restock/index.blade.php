@@ -10,7 +10,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Restock</h1>
+                <h1>Pembelian</h1>
             </div>
 
             <div class="section-body">
@@ -26,9 +26,9 @@
                 </a>
 
                 @if ($restocks->isEmpty())
-                    <p class="mt-3">Belum ada restock.</p>
+                    <p class="mt-3">Belum ada pembelian.</p>
                 @else
-                    <div class="card">
+                    <div class="card mt-4">
                         <div class="card-header">
                             <div class="search-element">
                                 <form action="{{ route('restocks.index') }}" class="form-inline" method="GET">
@@ -52,7 +52,8 @@
                                             <th>Harga Satuan</th>
                                             <th>Total Harga</th>
                                             <th>Tanggal Pembelian</th>
-                                            <th>Aksi</th>
+                                            <th>Supplier</th>
+                                            <th>Edit</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -64,6 +65,8 @@
                                                 <td>{{ number_format($restock->harga_satuan, 0, ',', '.') }}</td>
                                                 <td>{{ number_format($restock->total_harga, 0, ',', '.') }}</td>
                                                 <td>{{ $restock->tanggal_pembelian }}</td>
+                                                <td>{{ $restock->suppliers->nama_supplier}}</td>
+
                                                 <td>
                                                     <form action="{{ url('/restocks/' . $restock->id_product) }}"
                                                         method="POST">
